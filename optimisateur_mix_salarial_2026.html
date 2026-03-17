@@ -1,0 +1,1944 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Optimisateur Mix Salarial — Dirigeant Belge 2026</title>
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   STYLES — Optimisateur Mix Salarial
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  --bg: #0c0e14;
+  --surface: #141820;
+  --surface2: #1c2230;
+  --surface3: #242a38;
+  --border: #2a3040;
+  --border-focus: #5b7fff;
+  --text: #e2e5f0;
+  --text2: #9ba3b8;
+  --accent: #5b7fff;
+  --accent-glow: rgba(91,127,255,0.15);
+  --green: #3dd9a0;
+  --green-bg: rgba(61,217,160,0.08);
+  --orange: #f0a050;
+  --red: #f06060;
+  --yellow: #e8d44d;
+  --r: 10px;
+  --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:var(--font); background:var(--bg); color:var(--text); line-height:1.55; }
+
+/* ── Header ── */
+header {
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:14px 28px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky; top:0; z-index:100;
+}
+header h1 { font-size:17px; font-weight:700; color:var(--accent); letter-spacing:-0.4px; }
+.hdr-btns { display:flex; gap:8px; }
+
+/* ── Boutons ── */
+.btn {
+  background:var(--surface2); border:1px solid var(--border); color:var(--text);
+  padding:8px 18px; border-radius:7px; font-size:13px; cursor:pointer;
+  font-family:var(--font); transition:all .15s; font-weight:500;
+}
+.btn:hover { background:var(--surface3); border-color:var(--text2); }
+.btn-go {
+  background:var(--accent); border-color:var(--accent); color:#fff;
+  padding:14px 36px; font-size:16px; font-weight:700; border-radius:10px;
+  letter-spacing:0.2px;
+}
+.btn-go:hover { opacity:.92; }
+.btn-go:active { transform:scale(.98); }
+
+/* ── Layout ── */
+.container { max-width:1100px; margin:0 auto; padding:28px 24px; }
+
+/* ── Formulaire ── */
+.form-card {
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--r);
+  margin-bottom:20px; overflow:hidden;
+}
+.form-card-head {
+  padding:14px 20px; background:var(--surface2);
+  font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:.8px;
+  color:var(--text2); display:flex; align-items:center; gap:10px;
+  cursor:pointer; user-select:none;
+}
+.form-card-head .ico { font-size:17px; }
+.form-card-body { padding:20px; display:grid; grid-template-columns:1fr 1fr; gap:14px 24px; }
+.form-card-body.single { grid-template-columns:1fr; }
+
+.field { display:flex; flex-direction:column; gap:5px; }
+.field label {
+  font-size:12px; font-weight:600; color:var(--text2);
+  text-transform:uppercase; letter-spacing:.5px;
+}
+.field input, .field select {
+  background:var(--bg); border:1px solid var(--border); border-radius:7px;
+  padding:10px 14px; color:var(--text); font-size:14px; font-family:var(--font);
+  transition:border-color .15s;
+}
+.field input:focus, .field select:focus { outline:none; border-color:var(--border-focus); box-shadow:0 0 0 3px var(--accent-glow); }
+.field input[type=number] { text-align:right; }
+.field .hint { font-size:11px; color:var(--text2); line-height:1.3; }
+
+.field-inline {
+  display:flex; align-items:center; gap:10px;
+  padding:5px 0;
+}
+.field-inline label { font-size:12.5px; color:var(--text); flex:1; }
+.toggle { position:relative; width:34px; height:18px; cursor:pointer; flex-shrink:0; }
+.toggle input { opacity:0; width:0; height:0; }
+.toggle .sl {
+  position:absolute; inset:0; background:var(--border); border-radius:18px; transition:.2s;
+}
+.toggle .sl:before {
+  content:""; position:absolute; width:14px; height:14px; left:2px; bottom:2px;
+  background:var(--text); border-radius:50%; transition:.2s;
+}
+.toggle input:checked+.sl { background:var(--accent); }
+.toggle input:checked+.sl:before { transform:translateX(16px); }
+
+/* ── Champ principal ── */
+.main-field {
+  background:linear-gradient(135deg, var(--surface2), var(--surface3));
+  border:2px solid var(--accent); border-radius:var(--r);
+  padding:24px 28px; margin-bottom:24px; text-align:center;
+}
+.main-field label {
+  display:block; font-size:11px; text-transform:uppercase; letter-spacing:1.5px;
+  color:var(--accent); margin-bottom:8px; font-weight:700;
+}
+.main-field input {
+  width:100%; text-align:center; font-size:36px; font-weight:800;
+  background:transparent; border:none; color:var(--text); outline:none;
+  letter-spacing:-1px;
+}
+.main-field .sub { font-size:12px; color:var(--text2); margin-top:6px; }
+
+/* ── Bouton central ── */
+.go-wrap { text-align:center; margin:28px 0; }
+
+/* ── Résultats ── */
+.results { display:none; }
+.results.visible { display:block; }
+
+.result-hero {
+  background:var(--surface); border:2px solid var(--green); border-radius:var(--r);
+  padding:28px; margin-bottom:24px; text-align:center;
+}
+.result-hero h2 { font-size:14px; color:var(--green); text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
+.result-hero .big { font-size:42px; font-weight:800; color:var(--green); letter-spacing:-1px; }
+.result-hero .sub { color:var(--text2); font-size:13px; margin-top:6px; }
+
+.kpi-row { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:24px; }
+.kpi {
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--r);
+  padding:18px;
+}
+.kpi .kl { font-size:11px; text-transform:uppercase; letter-spacing:.7px; color:var(--text2); margin-bottom:4px; }
+.kpi .kv { font-size:24px; font-weight:700; }
+.kpi .ks { font-size:12px; color:var(--text2); margin-top:3px; }
+
+/* ── Mix optimal ── */
+.mix-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px; }
+.mix-card {
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--r);
+  padding:20px;
+}
+.mix-card h3 { font-size:14px; font-weight:600; color:var(--text2); margin-bottom:14px; }
+
+.mix-row {
+  display:flex; align-items:center; gap:10px; padding:8px 0;
+  border-bottom:1px solid var(--border);
+}
+.mix-row:last-child { border-bottom:none; }
+.mix-dot { width:10px; height:10px; border-radius:3px; flex-shrink:0; }
+.mix-label { flex:1; font-size:13px; }
+.mix-val { font-size:14px; font-weight:700; min-width:90px; text-align:right; }
+.mix-pct { font-size:12px; color:var(--text2); min-width:50px; text-align:right; }
+
+/* ── Tableau détail ── */
+.detail-table-wrap {
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--r);
+  overflow-x:auto; margin-bottom:24px;
+}
+.detail-table-wrap h3 {
+  padding:16px 20px; font-size:13px; font-weight:700; text-transform:uppercase;
+  letter-spacing:.5px; color:var(--accent); border-bottom:1px solid var(--border);
+}
+table { width:100%; border-collapse:collapse; font-size:13px; }
+th,td { padding:10px 16px; text-align:right; border-bottom:1px solid var(--border); white-space:nowrap; }
+th { background:var(--surface2); color:var(--text2); font-weight:600; text-transform:uppercase; font-size:11px; letter-spacing:.4px; }
+th:first-child,td:first-child { text-align:left; }
+tr.total-row td { font-weight:700; border-top:2px solid var(--border); background:var(--surface2); }
+tr.total-row td:last-child { color:var(--green); }
+
+/* ── Alertes ── */
+.alerts-box {
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--r);
+  padding:18px 22px; margin-bottom:24px;
+}
+.alerts-box h3 { font-size:13px; font-weight:700; margin-bottom:10px; }
+.al { display:flex; gap:8px; padding:7px 0; font-size:13px; border-bottom:1px solid var(--border); }
+.al:last-child { border-bottom:none; }
+.al.red { color:var(--red); }
+.al.yellow { color:var(--yellow); }
+.al.ok { color:var(--green); }
+
+/* ── SVG Charts ── */
+.chart-wrap svg { width:100%; }
+
+/* ── Tooltip ── */
+.tooltip-icon {
+  display:inline-flex; align-items:center; justify-content:center;
+  width:15px; height:15px; border-radius:50%; background:var(--border);
+  color:var(--text2); font-size:9px; cursor:help; margin-left:3px;
+  position:relative; flex-shrink:0; font-style:normal;
+}
+.tooltip-icon:hover::after {
+  content:attr(data-tip); position:absolute; bottom:calc(100% + 6px);
+  left:50%; transform:translateX(-50%); background:var(--surface2);
+  border:1px solid var(--border); border-radius:6px; padding:8px 12px;
+  font-size:11px; line-height:1.4; color:var(--text); width:260px;
+  white-space:normal; z-index:999; box-shadow:0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* ── Conditionnel ── */
+.cond { display:none; }
+.cond.show { display:flex; }
+.cond-block { display:none; }
+.cond-block.show { display:grid; }
+
+/* ── Print ── */
+.print-header { display:none; }
+.print-setup { background:var(--surface); border:1px solid var(--border); border-radius:var(--r); padding:14px 18px; margin-bottom:16px; }
+.print-setup h3 { margin-bottom:10px; font-size:14px; }
+.print-setup .logo-preview { max-height:60px; max-width:200px; margin-top:6px; border-radius:4px; }
+
+@media print {
+  @page { margin: 15mm 12mm; size: A4; }
+  header,.go-wrap,.hdr-btns,.form-card,.print-setup,#r_marginal_chart,.tooltip-icon { display:none!important; }
+  body { background:#fff!important; color:#000!important; font-size:11px; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .container { max-width:100%!important; padding:0!important; }
+  .results { display:block!important; page-break-inside:auto; }
+  .print-header { display:flex!important; justify-content:space-between; align-items:flex-start; border-bottom:2px solid #333; padding-bottom:12px; margin-bottom:16px; }
+  .print-header .ph-logo img { max-height:50px; max-width:180px; background:#1a1a2e; padding:8px 12px; border-radius:6px; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .print-header .ph-info { text-align:right; font-size:10px; color:#555; line-height:1.6; }
+  .print-header .ph-info .ph-title { font-size:14px; font-weight:700; color:#000; }
+  .print-header .ph-info .ph-client { font-size:12px; font-weight:600; color:#222; }
+  .result-hero { background:#f5f5f5!important; border:1px solid #ccc; padding:12px; margin-bottom:12px; page-break-inside:avoid; }
+  .result-hero .big { color:#000!important; font-size:28px!important; }
+  .result-hero .sub,.result-hero div[style*="background"] { color:#333!important; }
+  .kpi-row { border:1px solid #ccc; border-radius:6px; }
+  .kpi { background:#fafafa!important; border-color:#ddd!important; }
+  .kpi .kl { color:#555!important; }
+  .kpi .kv { color:#000!important; }
+  .kpi .ks { color:#777!important; }
+  .mix-card { background:#fff!important; border:1px solid #ccc!important; page-break-inside:avoid; }
+  .mix-card h3 { color:#000!important; }
+  .mix-grid { grid-template-columns:1fr 1fr!important; gap:12px!important; }
+  .alerts-box { background:#fafafa!important; border:1px solid #ccc!important; page-break-inside:avoid; }
+  .alerts-box h3 { color:#000!important; }
+  .al { color:#333!important; border-color:#ddd!important; }
+  .al.red { background:#fff0f0!important; border-color:#d88!important; }
+  .al.ok { background:#f0fff5!important; border-color:#8b8!important; }
+  .detail-table-wrap { page-break-inside:avoid; background:#fff!important; border:1px solid #ccc!important; }
+  table { width:100%; }
+  th { background:#eee!important; color:#000!important; }
+  td { color:#222!important; border-color:#ddd!important; }
+  .total-row td { background:#f0f0f0!important; color:#000!important; font-weight:700; }
+  svg text { fill:#333!important; }
+  .mix-dot { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  /* Footer */
+  .print-footer { display:block!important; margin-top:20px; padding-top:10px; border-top:1px solid #ccc; font-size:9px; color:#888; text-align:center; }
+}
+.print-footer { display:none; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>⚡ Optimisateur Mix Salarial — Dirigeant Belge 2026</h1>
+  <div class="hdr-btns">
+    <input type="text" id="i_client_name" placeholder="Nom du client" style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:6px 12px;color:var(--text);font-size:13px;width:180px">
+    <button class="btn" onclick="exportCSV()">📥 CSV</button>
+    <button class="btn" onclick="printPDF()">🖨️ PDF</button>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ═══ CHAMP PRINCIPAL ═══ -->
+  <div class="main-field">
+    <label>💰 Quel revenu net poche annuel souhaitez-vous ?</label>
+    <input type="number" id="i_net_cible" value="80000" step="1000" min="0">
+    <div class="sub">Montant net après tous impôts, cotisations et prélèvements</div>
+  </div>
+
+  <!-- ═══ PARAMÈTRES SOCIÉTÉ ═══ -->
+  <div class="form-card">
+    <div class="form-card-head"><span class="ico">🏢</span> Société</div>
+    <div class="form-card-body">
+      <div class="field">
+        <label>Bénéfice imposable avant retraits (€)</label>
+        <input type="number" id="i_benefice" value="150000" step="5000" min="0">
+        <div class="hint">Résultat fiscal de la société avant toute rémunération/distribution</div>
+      </div>
+      <div class="field">
+        <label>Statut</label>
+        <select id="i_pme">
+          <option value="oui" selected>PME (ISoc 20% / 25%)</option>
+          <option value="non">Grande entreprise (ISoc 25%)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PARAMÈTRES DIRIGEANT ═══ -->
+  <div class="form-card">
+    <div class="form-card-head"><span class="ico">👤</span> Dirigeant</div>
+    <div class="form-card-body">
+      <div class="field">
+        <label>Situation familiale</label>
+        <select id="i_situation">
+          <option value="isole" selected>Isolé</option>
+          <option value="marie">Marié / Cohabitant légal</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Enfants à charge</label>
+        <input type="number" id="i_enfants" value="0" min="0" max="10">
+      </div>
+      <div class="field cond" id="row_conjoint">
+        <label>Revenus professionnels nets du conjoint (€/an)</label>
+        <input type="number" id="i_conjoint_rev" value="0" min="0" step="1000">
+        <div class="hint">Si 0 ou très faible → le quotient conjugal s'applique automatiquement (max 30% de vos revenus, plafonné à 12 070 €)</div>
+      </div>
+      <div class="field">
+        <label>Additionnels communaux IPP (%)</label>
+        <input type="number" id="i_additionnels" value="7" min="0" max="9" step="0.1">
+        <div class="hint">Varie par commune (ex : Bruxelles ~6.5%, Anvers ~8%)</div>
+      </div>
+      <div class="field">
+        <label>Frais professionnels</label>
+        <select id="i_frais_type" onchange="toggleFraisReels()">
+          <option value="forfait">Forfait légal (3 % plafonné)</option>
+          <option value="reels">Frais réels</option>
+        </select>
+      </div>
+      <div class="field cond" id="row_frais_reels">
+        <label>Montant frais réels annuels (€)</label>
+        <input type="number" id="i_frais_reels" value="5000" min="0" step="500">
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ CANAUX DISPONIBLES ═══ -->
+  <div class="form-card">
+    <div class="form-card-head"><span class="ico">🔧</span> Canaux de retrait disponibles</div>
+    <div class="form-card-body single">
+      <div class="hint" style="margin-bottom:10px">Activez les canaux que le dirigeant peut utiliser. Le simulateur optimisera automatiquement la répartition.</div>
+
+      <div class="field-inline">
+        <label>💼 Rémunération de dirigeant</label>
+        <label class="toggle"><input type="checkbox" id="t_remun" checked disabled><span class="sl"></span></label>
+      </div>
+      <div class="hint" style="margin-bottom:10px; margin-top:-5px">Toujours actif — si &lt; 50.000 €, perte du taux ISoc réduit PME (le moteur optimise librement)</div>
+
+      <div class="field-inline">
+        <label>📈 Dividendes</label>
+        <label class="toggle"><input type="checkbox" id="t_div" checked><span class="sl"></span></label>
+      </div>
+
+      <div class="field-inline" id="row_vvprbis_toggle">
+        <label style="padding-left:24px">↳ VVPRbis applicable ?</label>
+        <label class="toggle"><input type="checkbox" id="t_vvprbis"><span class="sl"></span></label>
+      </div>
+      <div class="cond" id="row_vvprbis_annee" style="padding-left:24px; margin-bottom:8px">
+        <div class="field" style="max-width:200px">
+          <label>Année émission VVPRbis</label>
+          <input type="number" id="i_vvprbis_annee" value="2020" min="2013" max="2026">
+        </div>
+      </div>
+
+      <div class="field-inline">
+        <label>✍️ Droits d'auteur</label>
+        <label class="toggle"><input type="checkbox" id="t_da" onchange="toggleDA()"><span class="sl"></span></label>
+      </div>
+      <div class="cond-block" id="row_da_params" style="grid-template-columns:1fr; gap:8px; padding-left:24px; margin-bottom:8px">
+        <div class="field">
+          <label>Montant brut droits d'auteur (€/an)</label>
+          <input type="number" id="i_da_brut" value="15000" min="0" step="500" oninput="calcDAPreview()">
+          <div class="hint">Limité automatiquement à 30% de la rémunération brute. Plafond annuel : 75.360 €. PM 15% libératoire.</div>
+        </div>
+        <div class="field-inline" style="padding-left:0">
+          <label>Attestation du travail des arts ?</label>
+          <label class="toggle"><input type="checkbox" id="t_attestation" onchange="calcDAPreview()"><span class="sl"></span></label>
+        </div>
+        <div id="da_preview" style="background:var(--surface2); border-radius:8px; padding:12px; margin-top:4px; font-size:13px"></div>
+      </div>
+
+      <div class="field-inline">
+        <label>🏠 Loyer (immeuble perso → société)</label>
+        <label class="toggle"><input type="checkbox" id="t_loyer" onchange="toggleLoyer()"><span class="sl"></span></label>
+      </div>
+      <div class="cond-block" id="row_loyer_params" style="grid-template-columns:1fr 1fr; gap:12px; padding-left:24px; margin-bottom:8px">
+        <div class="field">
+          <label>RC non indexé (€)</label>
+          <input type="number" id="i_rc" value="1500" min="0" step="100">
+        </div>
+        <div class="field">
+          <label>% usage professionnel</label>
+          <input type="number" id="i_loyer_pct" value="100" min="0" max="100" step="5">
+        </div>
+      </div>
+
+      <div class="field-inline">
+        <label>🚗 Avantages en nature (ATN)</label>
+        <label class="toggle"><input type="checkbox" id="t_atn" onchange="toggleATN()"><span class="sl"></span></label>
+      </div>
+      <div class="cond-block" id="row_atn_params" style="grid-template-columns:1fr; gap:8px; padding-left:24px; margin-bottom:8px">
+        <div class="hint" style="margin-bottom:4px">Les ATN s'ajoutent au revenu imposable IPP du dirigeant. Ils ne génèrent pas de cash mais augmentent l'impôt. Plafond : 20 % des rémunérations.</div>
+        <div class="field-inline"><label>🚗 Voiture de société</label><label class="toggle"><input type="checkbox" id="atn_voiture" onchange="calcATNPreview()"><span class="sl"></span></label></div>
+        <div class="cond-block" id="row_atn_voiture" style="grid-template-columns:1fr 1fr; gap:8px; margin-bottom:6px">
+          <div class="field"><label>Valeur catalogue TVAC (€)</label><input type="number" id="i_atn_voit_val" value="40000" step="1000" onchange="calcATNPreview()"></div>
+          <div class="field"><label>CO₂ (g/km)</label><input type="number" id="i_atn_voit_co2" value="120" step="1" onchange="calcATNPreview()"></div>
+          <div class="field"><label>Carburant</label><select id="i_atn_voit_carb" onchange="calcATNPreview()"><option value="essence">Essence</option><option value="diesel">Diesel</option><option value="hybride">Hybride</option><option value="electrique">Électrique</option></select></div>
+          <div class="field"><label>Âge véhicule (mois)</label><input type="number" id="i_atn_voit_age" value="12" min="0" max="240" onchange="calcATNPreview()"></div>
+        </div>
+        <div class="field-inline"><label>📱 GSM/Smartphone (36 €/an)</label><label class="toggle"><input type="checkbox" id="atn_gsm" onchange="calcATNPreview()"><span class="sl"></span></label></div>
+        <div class="field-inline"><label>📱 Tablette (36 €/an)</label><label class="toggle"><input type="checkbox" id="atn_tab" onchange="calcATNPreview()"><span class="sl"></span></label></div>
+        <div class="field-inline"><label>💻 PC/Laptop (72 €/an)</label><label class="toggle"><input type="checkbox" id="atn_pc" onchange="calcATNPreview()"><span class="sl"></span></label></div>
+        <div class="field-inline"><label>🌐 Internet (60 €/an)</label><label class="toggle"><input type="checkbox" id="atn_net" onchange="calcATNPreview()"><span class="sl"></span></label></div>
+        <div class="field-inline"><label>📞 Abonnement téléphonique (48 €/an)</label><label class="toggle"><input type="checkbox" id="atn_tel" onchange="calcATNPreview()"><span class="sl"></span></label></div>
+
+        <div style="margin-top:10px;border-top:1px solid var(--border);padding-top:10px">
+        <div class="field-inline"><label>🏠 Logement mis à disposition <span class="tooltip-icon" data-tip="La société est propriétaire/usufruitier du logement du dirigeant. ATN = RC non indexé × coeff indexation × 100/60 × 2. Si meublé : × 5/3 en plus.">?</span></label><label class="toggle"><input type="checkbox" id="atn_logement" onchange="toggleATNLogement(); calcATNPreview()"><span class="sl"></span></label></div>
+        <div class="cond-block" id="row_atn_logement" style="grid-template-columns:1fr 1fr; gap:8px; margin-bottom:6px">
+          <div class="field"><label>RC non indexé logement (€)</label><input type="number" id="i_atn_log_rc" value="1500" step="100" onchange="calcATNPreview()"></div>
+          <div class="field-inline"><label>Meublé</label><label class="toggle"><input type="checkbox" id="atn_log_meuble" onchange="calcATNPreview()"><span class="sl"></span></label></div>
+        </div>
+        <div class="field-inline"><label>🔥 Chauffage (2 560 €/an) <span class="tooltip-icon" data-tip="Forfait dirigeants revenus 2026. Condition : la société doit aussi mettre le logement à disposition (depuis 2022).">?</span></label><label class="toggle"><input type="checkbox" id="atn_chauffage" onchange="calcATNPreview()"><span class="sl"></span></label></div>
+        <div class="field-inline"><label>⚡ Électricité (1 280 €/an) <span class="tooltip-icon" data-tip="Forfait dirigeants revenus 2026. Condition : la société doit aussi mettre le logement à disposition (depuis 2022).">?</span></label><label class="toggle"><input type="checkbox" id="atn_electricite" onchange="calcATNPreview()"><span class="sl"></span></label></div>
+        <div id="atn_energie_alert" style="display:none;background:rgba(240,96,96,0.1);border:1px solid var(--red);border-radius:8px;padding:8px 12px;margin-top:6px;font-size:11.5px;color:var(--red)">
+          ⚠️ Les forfaits chauffage et électricité ne sont applicables que si la société met <strong>aussi le logement à disposition</strong> (AR 19/12/2021). Sans ATN Logement, l'évaluation se fait à la valeur réelle.
+        </div>
+        </div>
+
+        <div style="margin-top:10px;border-top:1px solid var(--border);padding-top:10px">
+        <div class="field-inline"><label>🏛️ ATN Cotisations sociales <span class="tooltip-icon" data-tip="Si la société paie les cotisations sociales du dirigeant, cela constitue un ATN égal au montant des cotisations. Cet ATN s'ajoute à la base imposable (IPP + cotis) mais ne génère pas de net supplémentaire.">?</span></label><label class="toggle"><input type="checkbox" id="atn_cotis_soc" onchange="calcATNPreview()"><span class="sl"></span></label></div>
+        </div>
+        <div id="atn_preview" style="background:var(--surface2); border-radius:8px; padding:12px; margin-top:6px; font-size:13px"></div>
+      </div>
+
+      <div class="field-inline">
+        <label>🎟️ Chèques-repas</label>
+        <label class="toggle"><input type="checkbox" id="t_cheques" checked><span class="sl"></span></label>
+      </div>
+      <div class="cond" id="row_cheques_jours" style="padding-left:24px; margin-bottom:8px">
+        <div class="field" style="max-width:200px">
+          <label>Nombre de jours ouvrés</label>
+          <input type="number" id="i_jours" value="220" min="0" max="250">
+        </div>
+      </div>
+
+      <div class="field-inline">
+        <label>🎁 Éco-chèques, sport/culture, cadeaux</label>
+        <label class="toggle"><input type="checkbox" id="t_avantages" checked><span class="sl"></span></label>
+      </div>
+
+      <div class="field-inline">
+        <label>📋 Frais forfaitaires non taxés</label>
+        <label class="toggle"><input type="checkbox" id="t_forfaits" onchange="toggleForfaits()"><span class="sl"></span></label>
+      </div>
+      <div class="cond-block" id="row_forfaits" style="grid-template-columns:1fr; gap:8px; padding-left:24px; margin-bottom:8px">
+        <div class="field">
+          <label>Montant annuel (€)</label>
+          <input type="number" id="i_forfaits" value="5000" min="0" step="500">
+          <div class="hint">Remboursement de frais forfaitaires (ruling ou convention). 100 % net pour le dirigeant, 100 % déductible pour la société. Aucune charge sociale ni fiscale.</div>
+        </div>
+      </div>
+
+      <div class="field-inline">
+        <label>📊 Plan d'options sur actions (CALL PLUS)</label>
+        <label class="toggle"><input type="checkbox" id="t_callplus" onchange="toggleCallPlus()"><span class="sl"></span></label>
+      </div>
+      <div class="cond-block" id="row_callplus" style="grid-template-columns:1fr; gap:10px; padding-left:24px; margin-bottom:8px">
+        <div class="hint" style="margin-bottom:6px">Loi 26/03/1999 — Ruling CALL PLUS. ATN = 25 % du montant du plan. Période de blocage 1 an. Plus-value non imposée.</div>
+        <div class="field">
+          <label>💰 Net escompté du plan (€)</label>
+          <input type="number" id="i_cp_net" value="30000" min="0" step="1000" oninput="calcCallPlusPreview()">
+          <div class="hint">Montant net que le dirigeant souhaite recevoir du plan (après Pp et cotisations, performance neutre)</div>
+        </div>
+        <div id="cp_preview" style="background:var(--surface2); border-radius:8px; padding:14px; margin-top:6px; font-size:13px; line-height:1.8">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ BOUTON OPTIMISER ═══ -->
+  <div class="go-wrap">
+    <button class="btn btn-go" onclick="optimiser()">⚡ Calculer le mix optimal</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       RÉSULTATS
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="results" id="results">
+    <!-- Print header (visible only on print) -->
+    <div class="print-header" id="print_header">
+      <div class="ph-logo"><img id="ph_logo_img" src="" alt="Disrupt Consulting"></div>
+      <div class="ph-info">
+        <div class="ph-title">Simulation Mix Salarial Optimal</div>
+        <div class="ph-client" id="ph_client_name"></div>
+        <div>Revenus 2026 — Exercice d'imposition 2027</div>
+        <div id="ph_date"></div>
+      </div>
+    </div>
+    <div id="r_hero"></div>
+    <div id="r_kpis"></div>
+    <div id="r_alerts"></div>
+    <div id="r_marginal_chart" style="margin-bottom:20px"></div>
+    <div class="mix-grid">
+      <div class="mix-card" id="r_mix"></div>
+      <div class="mix-card" id="r_chart"></div>
+    </div>
+    <div class="detail-table-wrap" id="r_table"></div>
+    <!-- Print footer -->
+    <div class="print-footer">
+      Disrupt Consulting SRL — Ce document est une simulation indicative et ne constitue pas un avis fiscal. Les montants sont basés sur les barèmes IPP, cotisations sociales et PM applicables aux revenus 2026 (E.I. 2027).
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════════════
+// CONFIG_FISCALE_2026
+// ═══════════════════════════════════════════════════════════════════════════
+// ⬇️ MODIFIABLE — Ouvrir dans Notepad, changer les chiffres, sauvegarder.
+// ═══════════════════════════════════════════════════════════════════════════
+
+const CONFIG = {
+
+  // ── ISoc ──
+  isoc_reduit: 0.20,
+  isoc_normal: 0.25,
+  seuil_isoc_reduit: 100000,
+  seuil_remun_min: 50000,       // 50.000 € min pour ISoc réduit (2026)
+
+  // ── IPP (revenus 2026 — exercice d'imposition 2027) ──
+  tranches_ipp: [
+    { limite: 16720,    taux: 0.25 },  // 0 → 16.720 € : 25%
+    { limite: 29510,    taux: 0.40 },  // 16.720 → 29.510 € : 40%
+    { limite: 51070,    taux: 0.45 },  // 29.510 → 51.070 € : 45%
+    { limite: Infinity, taux: 0.50 }   // 51.070+ € : 50%
+  ],
+  quotite_exemptee: 11550,             // Quotité exemptée de base (réforme Arizona 2026)
+  supplement_isole: 1290,              // Supplément parent isolé avec enfant (E.I. 2027)
+  // Majorations quotité exemptée pour enfants à charge (E.I. 2027, réforme)
+  supplements_enfants: [0, 2130, 5130, 11440, 18510, 25580],
+
+  // ── Quotient conjugal (E.I. 2027, réforme Arizona) ──
+  quotient_conjugal_max: 11780,    // Plafond attribution au conjoint (en baisse progressive)
+
+  // ── Frais professionnels forfaitaires dirigeants ──
+  frais_forfait_taux: 0.03,
+  frais_forfait_plafond: 2820,
+
+  // ── Cotisations sociales indépendant (revenus 2026) ──
+  // Structure à 2 paliers + plafond
+  cotis_tranche1_taux: 0.2050,         // 20,50 % sur revenus ≤ seuil 1
+  cotis_tranche1_plafond: 60638.46,    // Seuil 1 (à indexer)
+  cotis_tranche2_taux: 0.1416,         // 14,16 % entre seuil 1 et seuil 2
+  cotis_tranche2_plafond: 89361.88,    // Seuil 2 (au-delà : 0%)
+  cotis_gestion: 0.035,                // Frais de gestion caisse ~3,5 %
+  cotis_min_annuelle: 3560,            // Cotisation minimale annuelle (à indexer)
+
+  // ── Droits d'auteur ──
+  da_pm: 0.15,
+  da_plafond: 75360,
+  da_ratio_max: 0.30,
+  da_att_forfait1_taux: 0.50,
+  da_att_forfait1_plafond: 20100,
+  da_att_forfait2_taux: 0.25,
+  da_att_forfait2_plafond: 40190,
+
+  // ── ATN forfaitaires (AR 02/11/2017, non indexés) ──
+  atn_plafond_pct: 0.20,         // Max 20 % des rémunérations (2026)
+  atn_taxe_depassement: 0.075,   // 7,5 % sur excédent
+  atn_gsm: 36,                   // 36 €/an par appareil (smartphone)
+  atn_tab: 36,                   // 36 €/an par tablette
+  atn_pc: 72,                    // 72 €/an par PC/laptop
+  atn_internet: 60,              // 60 €/an (une seule connexion)
+  atn_abonnement_tel: 48,        // 48 €/an abonnement téléphonique
+  atn_minimum: 1690,             // ATN minimum voiture 2026
+  atn_co2_ref_essence: 71,       // g/km référence essence 2025 (WLTP)
+  atn_co2_ref_diesel: 59,        // g/km référence diesel 2025 (WLTP)
+
+  // ── ATN Logement, chauffage, électricité (dirigeants, revenus 2026) ──
+  atn_logement_coeff: 2.2446,    // Coefficient indexation RC (revenus 2026, à vérifier)
+  atn_logement_facteur: 100/60,  // 100/60 du RC indexé
+  atn_logement_mult: 2,          // × 2 pour dirigeants
+  atn_logement_meuble: 5/3,      // × 5/3 si meublé
+  atn_chauffage_dirigeant: 2560, // Forfait chauffage dirigeants (revenus 2026)
+  atn_electricite_dirigeant: 1280,// Forfait électricité dirigeants (revenus 2026)
+
+  // ── Chèques ──
+  cheques_repas_patronale: 6.91,
+  cheques_repas_salariale: 1.09,
+  eco_cheques: 250,
+  sport_culture: 100,
+  cadeaux: 40,
+
+  // ── Dividendes ──
+  pm_ordinaire: 0.30,
+  pm_vvprbis_15: 0.15,           // Apports avant 2026, 3e exercice+
+  pm_vvprbis_20: 0.20,           // Apports avant 2026, 2e exercice
+  pm_vvprbis_18: 0.18,           // Apports à partir de 2026, 3e exercice+
+  div_exoneration: 833,           // Première tranche exonérée par contribuable (revenus 2026, à indexer)
+
+  // ── Loyer ──
+  coeff_revalo: 5.48,            // Coeff 2025 — À METTRE À JOUR
+  facteur_rc: 5 / 3,
+  loyer_forfait_frais: 0.40,     // Forfait de frais 40 %
+  loyer_forfait_plafond_rc: 2/3, // Plafond du forfait = 2/3 × RC non indexé × coeff revalo
+
+  // ── Options sur actions (CALL PLUS) ──
+  callplus_atn_pct: 0.25,        // ATN = 25 % du montant du plan (ruling CALL PLUS)
+  callplus_pp_taux: 0.535,       // Précompte professionnel 53,5 % sur l'ATN
+  callplus_cotis_taux: 0.2050,   // Cotisations sociales ~20,5 % sur l'ATN
+  callplus_cotis_gestion: 0.035  // Frais de gestion caisse sociale
+};
+
+// ═══════════════════════════════════════════════════════════════════════════
+// UTILITAIRES
+// ═══════════════════════════════════════════════════════════════════════════
+
+const C = CONFIG;
+
+const LOGO_DISRUPT = 'data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAJNA+MDASIAAhEBAxEB/8QAHQABAAIDAQEBAQAAAAAAAAAAAAgJBQYHBAMCAf/EAGEQAAEDAgIEBwkICREHAwUBAAABAgMEBQYRBwgSIQkTMUFRdbMUIjc4YXGBkaEyNkJ0drGytBUYIzVSV2KClRYXQ0dTVnKEhZKUosHE0dLTJDNUY3ODwiVV1JOjpfDxNP/EABoBAQADAQEBAAAAAAAAAAAAAAACAwQFAQb/xAAzEQEAAgECAgcGBgMBAQAAAAAAAQIDBBEFMRIhMkFRcdEGE4GhseEUM0JhwfAVIlKR8f/aAAwDAQACEQMRAD8AmWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEbdd3SxjfRf+pD9R1yhovsn3b3VxlLHN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';
+const $ = id => document.getElementById(id);
+const fmt = n => new Intl.NumberFormat('fr-BE',{minimumFractionDigits:0,maximumFractionDigits:0}).format(Math.round(n));
+const fmtPct = n => (n*100).toFixed(1)+' %';
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SECTION : TOGGLES UI
+// ═══════════════════════════════════════════════════════════════════════════
+
+function setupToggles() {
+  $('i_situation').addEventListener('change', () => {
+    $('row_conjoint').classList.toggle('show', $('i_situation').value === 'marie');
+  });
+  $('t_vvprbis').addEventListener('change', () => {
+    $('row_vvprbis_annee').classList.toggle('show', $('t_vvprbis').checked);
+  });
+  $('t_cheques').addEventListener('change', () => {
+    $('row_cheques_jours').classList.toggle('show', $('t_cheques').checked);
+  });
+  // Init
+  $('row_cheques_jours').classList.add('show');
+}
+function toggleDA() {
+  $('row_da_params').classList.toggle('show', $('t_da').checked);
+  if ($('t_da').checked) calcDAPreview();
+}
+
+function calcDAPreview() {
+  const brut = parseFloat($('i_da_brut').value) || 0;
+  if (brut <= 0) { $('da_preview').innerHTML = ''; return; }
+  const da = calcDANet(brut);
+  const plafond_info = brut > C.da_plafond ? `<div style="color:var(--red);margin-top:4px">⚠️ Dépasse le plafond annuel de ${fmt(C.da_plafond)} € → excédent requalifié en revenus professionnels</div>` : '';
+  $('da_preview').innerHTML = `
+    <div style="display:grid; grid-template-columns:1fr auto; gap:3px 16px">
+      <span style="color:var(--text2)">Brut droits d'auteur</span><strong>${fmt(brut)} €</strong>
+      ${$('t_attestation').checked ? `<span style="color:var(--text2)">Forfait frais (50%/25%)</span><strong style="color:var(--green)">- ${fmt(brut - da.net - da.pm)} €</strong>` : ''}
+      <span style="color:var(--text2)">PM 15%</span><strong style="color:var(--red)">- ${fmt(da.pm)} €</strong>
+      <span style="color:var(--text2)">Net dirigeant</span><strong style="color:var(--green)">${fmt(da.net)} €</strong>
+    </div>
+    <div style="margin-top:4px;font-size:11px;color:var(--text2)">ⓘ Si > 30% de la rémunération brute, le montant sera automatiquement limité.</div>
+    ${plafond_info}
+  `;
+}
+function toggleLoyer() {
+  $('row_loyer_params').classList.toggle('show', $('t_loyer').checked);
+}
+function toggleFraisReels() {
+  $('row_frais_reels').classList.toggle('show', $('i_frais_type').value === 'reels');
+}
+function toggleCallPlus() {
+  $('row_callplus').classList.toggle('show', $('t_callplus').checked);
+  if ($('t_callplus').checked) calcCallPlusPreview();
+}
+function toggleATN() {
+  $('row_atn_params').classList.toggle('show', $('t_atn').checked);
+  if ($('t_atn').checked) calcATNPreview();
+}
+function toggleForfaits() {
+  $('row_forfaits').classList.toggle('show', $('t_forfaits').checked);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SECTION : CALCUL ATN
+// ═══════════════════════════════════════════════════════════════════════════
+
+function calcATNVoiture() {
+  if (!$('atn_voiture') || !$('atn_voiture').checked) return 0;
+  const val_cat = parseFloat($('i_atn_voit_val').value) || 0;
+  const co2 = parseFloat($('i_atn_voit_co2').value) || 0;
+  const carb = $('i_atn_voit_carb').value;
+  const age_mois = parseFloat($('i_atn_voit_age').value) || 0;
+
+  // CO₂ de référence
+  const co2_ref = (carb === 'diesel') ? C.atn_co2_ref_diesel : C.atn_co2_ref_essence;
+  // Coefficient CO₂ : 5,5% base ± 0,1% par g d'écart
+  let coeff = 0.055 + (co2 - co2_ref) * 0.001;
+  coeff = Math.max(0.04, Math.min(0.18, coeff));
+  if (carb === 'electrique') coeff = 0.04;
+
+  // Correction âge : -6% par an, min 70%
+  const facteur_age = Math.max(0.70, 1 - (age_mois / 12) * 0.06);
+
+  // ATN = val × 6/9 × coeff CO₂ × facteur âge
+  // Note: pour dirigeants c'est 6/7 depuis 2025 selon certaines sources,
+  // mais le ruling CALL PLUS utilise 6/9. On garde 6/7 (formule standard).
+  const atn = val_cat * (6/7) * coeff * facteur_age;
+  return Math.max(atn, C.atn_minimum);
+}
+
+function calcATNLogement() {
+  if (!$('atn_logement') || !$('atn_logement').checked) return 0;
+  const rc = parseFloat($('i_atn_log_rc').value) || 0;
+  const meuble = $('atn_log_meuble') && $('atn_log_meuble').checked;
+  // ATN = RC × coeff indexation × 100/60 × 2 (dirigeants)
+  let atn = rc * C.atn_logement_coeff * C.atn_logement_facteur * C.atn_logement_mult;
+  if (meuble) atn *= C.atn_logement_meuble;
+  return atn;
+}
+
+function calcTotalATN() {
+  if (!$('t_atn') || !$('t_atn').checked) return 0;
+  let total = calcATNVoiture();
+  if ($('atn_gsm') && $('atn_gsm').checked) total += C.atn_gsm;
+  if ($('atn_tab') && $('atn_tab').checked) total += C.atn_tab;
+  if ($('atn_pc') && $('atn_pc').checked) total += C.atn_pc;
+  if ($('atn_net') && $('atn_net').checked) total += C.atn_internet;
+  if ($('atn_tel') && $('atn_tel').checked) total += C.atn_abonnement_tel;
+  total += calcATNLogement();
+  if ($('atn_chauffage') && $('atn_chauffage').checked) total += C.atn_chauffage_dirigeant;
+  if ($('atn_electricite') && $('atn_electricite').checked) total += C.atn_electricite_dirigeant;
+  return total;
+}
+
+function toggleATNLogement() {
+  const show = $('atn_logement') && $('atn_logement').checked;
+  $('row_atn_logement').classList.toggle('show', show);
+  // Alerte énergie si chauffage/électricité sans logement
+  checkEnergieAlert();
+}
+
+function checkEnergieAlert() {
+  const hasLogement = $('atn_logement') && $('atn_logement').checked;
+  const hasChauffage = $('atn_chauffage') && $('atn_chauffage').checked;
+  const hasElec = $('atn_electricite') && $('atn_electricite').checked;
+  const alert = $('atn_energie_alert');
+  if (alert) {
+    alert.style.display = (!hasLogement && (hasChauffage || hasElec)) ? 'block' : 'none';
+  }
+}
+
+function calcATNPreview() {
+  $('row_atn_voiture').classList.toggle('show', $('atn_voiture').checked);
+  toggleATNLogement();
+  checkEnergieAlert();
+  const total = calcTotalATN();
+  const voiture = calcATNVoiture();
+  const logement = calcATNLogement();
+  const use_atn_cotis = $('atn_cotis_soc') && $('atn_cotis_soc').checked;
+  let details = [];
+  if (voiture > 0) details.push(`Voiture : ${fmt(voiture)} €`);
+  if ($('atn_gsm').checked) details.push(`GSM : ${C.atn_gsm} €`);
+  if ($('atn_tab').checked) details.push(`Tablette : ${C.atn_tab} €`);
+  if ($('atn_pc').checked) details.push(`PC : ${C.atn_pc} €`);
+  if ($('atn_net').checked) details.push(`Internet : ${C.atn_internet} €`);
+  if ($('atn_tel') && $('atn_tel').checked) details.push(`Abonnement tél. : ${C.atn_abonnement_tel} €`);
+  if (logement > 0) details.push(`Logement : ${fmt(logement)} €${$('atn_log_meuble').checked ? ' (meublé)' : ''}`);
+  if ($('atn_chauffage') && $('atn_chauffage').checked) details.push(`Chauffage : ${fmt(C.atn_chauffage_dirigeant)} €`);
+  if ($('atn_electricite') && $('atn_electricite').checked) details.push(`Électricité : ${fmt(C.atn_electricite_dirigeant)} €`);
+  
+  let cotis_info = '';
+  if (use_atn_cotis) {
+    cotis_info = `<div style="margin-top:6px;padding:6px 10px;background:var(--bg);border-radius:6px;font-size:11.5px;color:var(--accent)">
+      🏛️ <strong>ATN cotisations sociales activé</strong> — La société paie les cotisations du dirigeant. 
+      Un ATN égal aux cotisations s'ajoute à la base imposable (IPP + cotis). Le montant exact sera calculé lors de l'optimisation (résolution circulaire).
+    </div>`;
+  }
+
+  $('atn_preview').innerHTML = (total > 0 || use_atn_cotis)
+    ? `${details.length > 0 ? `<div style="color:var(--text2)">${details.join(' · ')}</div>
+       <div style="margin-top:4px"><strong>Total ATN classiques : ${fmt(total)} €</strong></div>` : ''}
+       ${cotis_info}`
+    : '<span style="color:var(--text2)">Aucun ATN sélectionné</span>';
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SECTION : CALCUL CALL PLUS — Prévisualisation
+// ═══════════════════════════════════════════════════════════════════════════
+
+function calcCallPlusFromNet(net_escompte) {
+  // net = montant_plan - pp_sur_atn - cotis_sur_atn
+  // ATN = montant_plan × 0.25
+  // pp = ATN × 0.535
+  // cotis = ATN × 0.2050 × (1 + frais_gestion)
+  // net = montant_plan - (montant_plan × 0.25 × 0.535) - (montant_plan × 0.25 × 0.2050 × 1.035)
+  const atn_pct = C.callplus_atn_pct;
+  const pp_rate = C.callplus_pp_taux;
+  const cotis_rate = C.callplus_cotis_taux * (1 + C.callplus_cotis_gestion);
+  const charge_pct = atn_pct * pp_rate + atn_pct * cotis_rate;
+  // net = montant_plan × (1 - charge_pct)
+  const montant_plan = net_escompte / (1 - charge_pct);
+  const atn = montant_plan * atn_pct;
+  const pp = atn * pp_rate;
+  const cotis = atn * cotis_rate;
+  return { montant_plan, atn, pp, cotis, net: net_escompte, charge_pct };
+}
+
+function calcCallPlusPreview() {
+  const net = parseFloat($('i_cp_net').value) || 0;
+  if (net <= 0) { $('cp_preview').innerHTML = ''; return; }
+  const cp = calcCallPlusFromNet(net);
+  $('cp_preview').innerHTML = `
+    <div style="display:grid; grid-template-columns:1fr auto; gap:4px 16px">
+      <span style="color:var(--text2)">Montant du plan (société)</span><strong>${fmt(cp.montant_plan)} €</strong>
+      <span style="color:var(--text2)">ATN (25 % du plan)</span><strong>${fmt(cp.atn)} €</strong>
+      <span style="color:var(--text2)">Précompte professionnel (53,5 % × ATN)</span><strong style="color:var(--red)">- ${fmt(cp.pp)} €</strong>
+      <span style="color:var(--text2)">Cotisations sociales (~21,2 % × ATN)</span><strong style="color:var(--red)">- ${fmt(cp.cotis)} €</strong>
+      <span style="color:var(--text2); border-top:1px solid var(--border); padding-top:6px">Net escompté dirigeant</span><strong style="color:var(--green); border-top:1px solid var(--border); padding-top:6px">${fmt(cp.net)} €</strong>
+      <span style="color:var(--text2)">Taux de charge effectif</span><strong>${(cp.charge_pct * 100).toFixed(1)} %</strong>
+    </div>
+    <div style="margin-top:8px; font-size:11px; color:var(--text2)">
+      ⓘ L'ATN compte pour le seuil 50k € (ISoc réduit) et la règle des 20 % ATN.
+      Le montant du plan est déductible à l'ISoc au moment du dénouement (après 1 an).
+      Plus-value non imposée.
+    </div>
+  `;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SECTION : CALCUL COTISATIONS SOCIALES INDÉPENDANT
+// ═══════════════════════════════════════════════════════════════════════════
+
+function calcCotis(revenu) {
+  if (revenu <= 0) return 0;
+  // Structure à 2 paliers :
+  // 20,50 % sur la tranche ≤ 60.638,46 €
+  // 14,16 % sur la tranche entre 60.638,46 et 89.361,88 €
+  // 0 % au-delà de 89.361,88 €
+  let cotis = 0;
+  const t1 = Math.min(revenu, C.cotis_tranche1_plafond);
+  cotis += t1 * C.cotis_tranche1_taux;
+  if (revenu > C.cotis_tranche1_plafond) {
+    const t2 = Math.min(revenu, C.cotis_tranche2_plafond) - C.cotis_tranche1_plafond;
+    cotis += t2 * C.cotis_tranche2_taux;
+  }
+  // Cotisation minimale
+  cotis = Math.max(cotis, C.cotis_min_annuelle);
+  // Frais de gestion caisse
+  return cotis * (1 + C.cotis_gestion);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SECTION : CALCUL FRAIS PROFESSIONNELS
+// ═══════════════════════════════════════════════════════════════════════════
+
+function calcFraisPro(remun_nette_cotis) {
+  if ($('i_frais_type').value === 'reels') return parseFloat($('i_frais_reels').value) || 0;
+  return Math.min(remun_nette_cotis * C.frais_forfait_taux, C.frais_forfait_plafond);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SECTION : CALCUL IPP (barème progressif)
+// ═══════════════════════════════════════════════════════════════════════════
+
+function baremeIPP(montant) {
+  if (montant <= 0) return 0;
+  let impot = 0, prev = 0;
+  for (const t of C.tranches_ipp) {
+    const taxable = Math.min(montant, t.limite) - prev;
+    if (taxable <= 0) break;
+    impot += taxable * t.taux;
+    prev = t.limite;
+  }
+  return impot;
+}
+
+function calcIPP(revenu_imposable) {
+  if (revenu_imposable <= 0) return 0;
+  const sit = $('i_situation').value;
+  const enf = Math.min(parseInt($('i_enfants').value)||0, C.supplements_enfants.length-1);
+  const add = parseFloat($('i_additionnels').value)||7;
+
+  if (sit === 'marie') {
+    // ── Déclaration commune — quotient conjugal ──
+    const rev_conjoint = parseFloat($('i_conjoint_rev').value) || 0;
+    const combined = revenu_imposable + rev_conjoint;
+
+    // Quotient conjugal : si conjoint a < 30% du combiné
+    let attribution = 0;
+    if (combined > 0) {
+      const seuil_30 = combined * 0.30;
+      if (rev_conjoint < seuil_30) {
+        attribution = Math.min(seuil_30, C.quotient_conjugal_max) - rev_conjoint;
+        attribution = Math.max(0, attribution);
+      }
+    }
+
+    const base_dir = revenu_imposable - attribution;
+    const base_conj = rev_conjoint + attribution;
+
+    // Quotité exemptée : enfants sur le dirigeant, base pour le conjoint
+    const q_dir = C.quotite_exemptee + (C.supplements_enfants[enf] || 0);
+    const q_conj = C.quotite_exemptee;
+
+    const ipp_dir = Math.max(baremeIPP(base_dir) - baremeIPP(q_dir), 0);
+    const ipp_conj = Math.max(baremeIPP(base_conj) - baremeIPP(q_conj), 0);
+
+    // Retourne l'IPP total famille (les deux conjoints)
+    return (ipp_dir + ipp_conj) * (1 + add/100);
+  }
+
+  // ── Isolé ──
+  let quotite = C.quotite_exemptee;
+  if (sit === 'isole') quotite += C.supplement_isole;
+  quotite += C.supplements_enfants[enf] || 0;
+
+  const reduction = baremeIPP(quotite);
+  const brut = baremeIPP(revenu_imposable);
+  return Math.max(brut - reduction, 0) * (1 + add/100);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SECTION : CALCUL NET RÉMUNÉRATION
+// Pour un montant brut donné, retourne le net poche et toutes les charges.
+// ═══════════════════════════════════════════════════════════════════════════
+
+function calcNetRemun(brut) {
+  const cotis = calcCotis(brut);
+  const apres_cotis = brut - cotis;
+  const frais = calcFraisPro(apres_cotis);
+  const imposable = Math.max(apres_cotis - frais, 0);
+  const ipp = calcIPP(imposable);
+  const net = brut - cotis - ipp;
+  return { brut, cotis, frais, imposable, ipp, net };
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SECTION : CALCUL ISoc
+// ═══════════════════════════════════════════════════════════════════════════
+
+function calcISoc(benef_residuel, pme, remun_ok) {
+  if (benef_residuel <= 0) return 0;
+  if (pme && remun_ok) {
+    const tr1 = Math.min(benef_residuel, C.seuil_isoc_reduit);
+    const tr2 = Math.max(benef_residuel - C.seuil_isoc_reduit, 0);
+    return tr1 * C.isoc_reduit + tr2 * C.isoc_normal;
+  }
+  return benef_residuel * C.isoc_normal;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SECTION : CALCUL DROITS D'AUTEUR NET
+// ═══════════════════════════════════════════════════════════════════════════
+
+function calcDANet(brut) {
+  if (brut <= 0) return { brut:0, pm:0, net:0 };
+  const att = $('t_attestation') && $('t_attestation').checked;
+  let base = brut;
+  if (att) {
+    let frais = 0;
+    if (brut <= C.da_att_forfait1_plafond) {
+      frais = brut * C.da_att_forfait1_taux;
+    } else if (brut <= C.da_att_forfait2_plafond) {
+      frais = C.da_att_forfait1_plafond * C.da_att_forfait1_taux
+            + (brut - C.da_att_forfait1_plafond) * C.da_att_forfait2_taux;
+    } else {
+      frais = C.da_att_forfait1_plafond * C.da_att_forfait1_taux
+            + (C.da_att_forfait2_plafond - C.da_att_forfait1_plafond) * C.da_att_forfait2_taux;
+    }
+    base = brut - frais;
+  }
+  const pm = base * C.da_pm;
+  return { brut, pm, net: brut - pm };
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SECTION : MOTEUR D'OPTIMISATION
+// ═══════════════════════════════════════════════════════════════════════════
+
+function optimiser() {
+  const net_cible = parseFloat($('i_net_cible').value) || 0;
+  const benefice = parseFloat($('i_benefice').value) || 0;
+  const pme = $('i_pme').value === 'oui';
+
+  // ── Canaux activés ──
+  const use_div = $('t_div').checked;
+  const use_vvprbis = $('t_vvprbis').checked;
+  const use_da = $('t_da').checked;
+  const use_loyer = $('t_loyer').checked;
+  const use_cheques = $('t_cheques').checked;
+  const use_avantages = $('t_avantages').checked;
+  const use_callplus = $('t_callplus').checked;
+
+  // ── Droits d'auteur (montant fixe entré par l'utilisateur, limité à 30% du brut) ──
+  const da_input = use_da ? (parseFloat($('i_da_brut').value) || 0) : 0;
+
+  // ── Frais forfaitaires non taxés ──
+  const forfaits = $('t_forfaits') && $('t_forfaits').checked ? (parseFloat($('i_forfaits').value) || 0) : 0;
+
+  // ── CALL PLUS (montant fixe, entré par l'utilisateur) ──
+  let cp_net = 0, cp_montant = 0, cp_atn = 0, cp_pp = 0, cp_cotis = 0;
+  if (use_callplus) {
+    cp_net = parseFloat($('i_cp_net').value) || 0;
+    const cp = calcCallPlusFromNet(cp_net);
+    cp_montant = cp.montant_plan;
+    cp_atn = cp.atn;
+    cp_pp = cp.pp;
+    cp_cotis = cp.cotis;
+  }
+
+  // ── Plafonds ──
+  const rc = parseFloat($('i_rc').value) || 0;
+  const loyer_pct = (parseFloat($('i_loyer_pct').value) || 100) / 100;
+  const plafond_loyer = use_loyer ? Math.round(rc * C.facteur_rc * C.coeff_revalo * loyer_pct) : 0;
+  const jours = use_cheques ? (parseInt($('i_jours').value) || 220) : 0;
+
+  // ── Étape 1 : Chèques & avantages exonérés (toujours optimal de maximiser) ──
+  let net_cheques = 0;
+  let cout_cheques = 0;
+  if (use_cheques) {
+    net_cheques += jours * C.cheques_repas_patronale;
+    cout_cheques += jours * C.cheques_repas_patronale;
+  }
+  if (use_avantages) {
+    net_cheques += C.eco_cheques + C.sport_culture + C.cadeaux;
+    cout_cheques += C.eco_cheques + C.sport_culture + C.cadeaux;
+  }
+
+  // ── ATN (montant fixe, calculé d'après les inputs) ──
+  const atn_total = calcTotalATN();
+
+  // ── Calcul du taux de charge marginal des dividendes ──
+  // Ceci sert de plafond : on arrête la rémunération dès que son coût marginal dépasse celui des dividendes
+  const vvprbis_annee = parseInt($('i_vvprbis_annee').value) || 2020;
+  let taux_pm_div_eff;
+  if (use_vvprbis) {
+    if (vvprbis_annee >= 2026) {
+      taux_pm_div_eff = (2026 - vvprbis_annee >= 3) ? C.pm_vvprbis_18 : C.pm_ordinaire;
+    } else {
+      taux_pm_div_eff = (2026 - vvprbis_annee >= 3) ? C.pm_vvprbis_15 : C.pm_vvprbis_20;
+    }
+  } else {
+    taux_pm_div_eff = C.pm_ordinaire;
+  }
+  // ISoc effectif estimé (on prend le réduit si PME, sinon normal)
+  const isoc_est = pme ? C.isoc_reduit : C.isoc_normal;
+  // Coût pré-tax d'1€ net de dividende : 1 / (1-PM) / (1-ISoc)
+  const cout_1e_div = 1 / (1 - taux_pm_div_eff) / (1 - isoc_est);
+  // Ratio dividende = 1 / cout_1e_div
+  const ratio_div = 1 / cout_1e_div;
+
+  // ── ÉTAPE 1 : Trouver le point de croisement rémunération vs dividendes ──
+  // On augmente la rémunération par pas de 2.500 € et on calcule le ratio marginal.
+  // Dès que le ratio marginal de la rémunération passe en dessous du ratio dividendes,
+  // on a trouvé le plafond optimal de rémunération.
+  let remun_plafond = 0;
+  let crossover_found = false;
+
+  const remun_max = Math.min(benefice, 300000);
+  const step = 2500;
+  const cp_data = { cp_net, cp_montant, cp_atn, cp_pp, cp_cotis };
+
+  // ── ATN Cotisations sociales ──
+  const use_atn_cotis = $('atn_cotis_soc') && $('atn_cotis_soc').checked;
+
+  if (use_div) {
+    // ── LOGIQUE DE CROISEMENT ──
+    // On compare le ratio marginal de la rémunération (delta_net / delta_coût_société)
+    // avec le ratio des dividendes (net/coût_pré_tax).
+    // Quand ATN cotis actif : delta_coût_société = delta_brut + delta_cotisations > delta_brut
+    let best_above = 0;
+    let ever_above = false;
+
+    for (let r = 0; r <= remun_max; r += 500) {
+      const d1 = calcRemunDetail(r, atn_total, use_atn_cotis);
+      const d2 = calcRemunDetail(r + 500, atn_total, use_atn_cotis);
+      const delta_net = d2.net - d1.net;
+      const delta_cout = d2.cout - d1.cout; // Inclut delta cotis si ATN cotis actif
+      const marginal = delta_cout > 0 ? delta_net / delta_cout : 0;
+
+      if (marginal >= ratio_div) {
+        ever_above = true;
+        best_above = r + 500;
+      }
+    }
+
+    if (ever_above && best_above < remun_max) {
+      // On a trouvé un plafond : au-delà, la rémunération est moins efficace que les dividendes
+      remun_plafond = best_above;
+      crossover_found = true;
+    } else {
+      // La rémunération reste toujours plus efficace → pas de plafond
+      remun_plafond = remun_max;
+    }
+  } else {
+    remun_plafond = remun_max;
+  }
+
+  // ── DIVIDENDES EXONÉRÉS : toujours intéressants ──
+  // Même si la rémunération est plus efficace, les 833 € exonérés restent à 100% net
+  // → Le moteur testera les scénarios et les intégrera automatiquement
+
+  // ── ÉTAPE 2 : Tester les scénarios UNIQUEMENT jusqu'au plafond de croisement ──
+  // + tester aussi en dessous (pour le cas où 0 € de remun serait optimal)
+  let meilleur = null;
+  let meilleur_cout = Infinity;
+
+  for (let remun = 0; remun <= remun_plafond; remun += step) {
+    const result = evalScenario(remun, net_cible, benefice, pme,
+                                 use_div, use_vvprbis, use_loyer,
+                                 plafond_loyer, net_cheques, cout_cheques, cp_data, atn_total, da_input, forfaits, ratio_div);
+    if (result && result.net_total >= net_cible - 500) {
+      if (result.cout_total < meilleur_cout) {
+        meilleur_cout = result.cout_total;
+        meilleur = result;
+      }
+    }
+  }
+  // Tester aussi pile au plafond
+  {
+    const result = evalScenario(remun_plafond, net_cible, benefice, pme,
+                                 use_div, use_vvprbis, use_loyer,
+                                 plafond_loyer, net_cheques, cout_cheques, cp_data, atn_total, da_input, forfaits, ratio_div);
+    if (result && result.net_total >= net_cible - 500) {
+      if (result.cout_total < meilleur_cout) {
+        meilleur_cout = result.cout_total;
+        meilleur = result;
+      }
+    }
+  }
+
+  // Affiner autour du meilleur trouvé (pas de 500 €)
+  if (meilleur) {
+    const r0 = Math.max(0, meilleur.remun_brut - 5000);
+    const r1 = Math.min(remun_plafond, meilleur.remun_brut + 5000);
+    for (let remun = r0; remun <= r1; remun += 500) {
+      const result = evalScenario(remun, net_cible, benefice, pme,
+                                   use_div, use_vvprbis, use_loyer,
+                                   plafond_loyer, net_cheques, cout_cheques, cp_data, atn_total, da_input, forfaits, ratio_div);
+      if (result && result.net_total >= net_cible - 500) {
+        if (result.cout_total < meilleur_cout) {
+          meilleur_cout = result.cout_total;
+          meilleur = result;
+        }
+      }
+    }
+  }
+
+  if (!meilleur) {
+    alert("Impossible d'atteindre le net cible avec le bénéfice disponible et les canaux activés. Essayez d'augmenter le bénéfice ou de réduire le net cible.");
+    return;
+  }
+
+  // Stocker le plafond pour affichage
+  meilleur.remun_plafond = remun_plafond;
+  meilleur.crossover_found = crossover_found;
+
+  afficherResultats(meilleur, net_cible, benefice);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SECTION : CALCUL RAPIDE NET RÉMUNÉRATION (pour test marginal)
+// ═══════════════════════════════════════════════════════════════════════════
+
+function calcRemunDetail(brut, atn_val, use_atn_cotis_flag) {
+  // Retourne { net, cout_societe } pour un niveau de rémunération donné
+  const atn_v = atn_val || 0;
+
+  if (use_atn_cotis_flag) {
+    // ATN cotis : cotis = f(brut + atn + cotis) → itération
+    let co = 0;
+    for (let i = 0; i < 20; i++) {
+      const new_co = calcCotis(brut + atn_v + co);
+      if (Math.abs(new_co - co) < 1) { co = new_co; break; }
+      co = new_co;
+    }
+    const ap = brut - co;
+    const fp = Math.min(Math.max(ap, 0) * C.frais_forfait_taux, C.frais_forfait_plafond);
+    const total_atn = atn_v + co;
+    const imp = Math.max(ap - fp, 0) + total_atn;
+    const tax = calcIPP(imp);
+    const net = brut - tax; // Cotis payées par la société
+    const cout = brut + co; // Coût société = brut + cotisations
+    return { net, cout };
+  } else {
+    const base = brut + atn_v;
+    const co = calcCotis(base);
+    const ap = brut - co;
+    const fp = Math.min(Math.max(ap, 0) * C.frais_forfait_taux, C.frais_forfait_plafond);
+    const imp = Math.max(ap - fp, 0) + atn_v;
+    const tax = calcIPP(imp);
+    const net = brut - co - tax;
+    const cout = brut; // Coût société = brut (cotis payées par le dirigeant)
+    return { net, cout };
+  }
+}
+
+// Raccourci pour compatibilité
+function calcNetRemunQuick(brut, atn_val, use_atn_cotis_flag) {
+  return calcRemunDetail(brut, atn_val, use_atn_cotis_flag).net;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SECTION : ÉVALUATION D'UN SCÉNARIO
+// Pour un niveau de rémunération donné, remplit les autres canaux par ordre
+// d'efficacité et retourne le résultat complet.
+// ═══════════════════════════════════════════════════════════════════════════
+
+function evalScenario(remun, net_cible, benefice, pme,
+                       use_div, use_vvprbis, use_loyer,
+                       plafond_loyer, net_cheques, cout_cheques, cp_data, atn_total, da_input, forfaits, ratio_div) {
+
+  // 0. CALL PLUS (bloc fixe — déjà calculé)
+  const cp = cp_data || { cp_net:0, cp_montant:0, cp_atn:0, cp_pp:0, cp_cotis:0 };
+  const atn = atn_total || 0;
+  const ff = forfaits || 0;
+  const use_atn_cotis = $('atn_cotis_soc') && $('atn_cotis_soc').checked;
+
+  // ── Calcul du ratio marginal (net/coût société) ──
+  let remun_marginal_ratio = 1;
+  if (remun > 0 && ratio_div) {
+    const d1 = calcRemunDetail(remun, atn, use_atn_cotis);
+    const d2 = calcRemunDetail(remun + 1000, atn, use_atn_cotis);
+    const delta_net = d2.net - d1.net;
+    const delta_cout = d2.cout - d1.cout;
+    remun_marginal_ratio = delta_cout > 0 ? delta_net / delta_cout : 0;
+  }
+  const remun_depasse_div = ratio_div && remun_marginal_ratio < ratio_div && remun > 0;
+
+  // 1. Rémunération — cotisations sociales avec résolution circulaire ATN cotis
+  // Si ATN cotis activé : cotis = f(remun + atn + cotis) → résolution itérative
+  let cotis = 0;
+  let atn_cotis_val = 0;
+  if (use_atn_cotis) {
+    // Itération : ATN cotis = cotisations, qui dépendent de la base incluant ATN cotis
+    let prev_cotis = 0;
+    for (let iter = 0; iter < 20; iter++) {
+      const base = remun + atn + prev_cotis; // base inclut l'ATN cotis (= cotis précédentes)
+      cotis = calcCotis(base);
+      if (Math.abs(cotis - prev_cotis) < 1) break; // Convergence
+      prev_cotis = cotis;
+    }
+    atn_cotis_val = cotis; // L'ATN = le montant des cotisations payées par la société
+  } else {
+    const base = remun + atn;
+    cotis = calcCotis(base);
+  }
+
+  const total_atn_avec_cotis = atn + atn_cotis_val;
+  const apres_cotis = remun - cotis;
+  const frais_pro = calcFraisPro(Math.max(apres_cotis, 0));
+
+  // Base imposable rémunération (avant ajout loyer)
+  const imposable_remun = Math.max(apres_cotis - frais_pro, 0);
+
+  // 2. Droits d'auteur — montant fixe entré par l'utilisateur, limité à 30% du brut
+  let da_brut = 0, da_net = 0, da_pm = 0, da_plafonne = false;
+  if (da_input > 0 && remun > 0) {
+    const da_max_30pct = remun * C.da_ratio_max;
+    const da_max = Math.min(C.da_plafond, da_max_30pct);
+    da_brut = Math.min(da_input, da_max);
+    da_plafonne = da_input > da_brut;
+    const da_calc = calcDANet(da_brut);
+    da_net = da_calc.net;
+    da_pm = da_calc.pm;
+  }
+
+  // 3. Loyer — forfait de frais 40% (plafonné à 2/3 × RC × coeff revalo)
+  let loyer = 0, loyer_net = 0, loyer_impot = 0, loyer_imposable = 0, loyer_forfait = 0;
+  if (use_loyer && plafond_loyer > 0) {
+    const besoin_restant_loyer = net_cible - (remun - cotis) - net_cheques - cp.cp_net;
+    // Estimation avec taux marginal ~45%
+    if (besoin_restant_loyer > 0) {
+      loyer = Math.min(plafond_loyer, Math.ceil(besoin_restant_loyer / 0.70 / 500) * 500);
+      loyer = Math.min(loyer, plafond_loyer);
+    }
+    if (loyer > 0) {
+      const rc = parseFloat($('i_rc').value) || 0;
+      // Forfait 40% plafonné à 2/3 × RC non indexé × coeff revalorisation
+      const plafond_forfait = rc * C.loyer_forfait_plafond_rc * C.coeff_revalo;
+      loyer_forfait = Math.min(loyer * C.loyer_forfait_frais, plafond_forfait);
+      loyer_imposable = loyer - loyer_forfait;
+      // Le loyer imposable sera ajouté à la base IPP ci-dessous
+    }
+  }
+
+  // Base imposable IPP combinée = rémunération + ATN (classiques + ATN cotis) + loyer net imposable
+  const imposable_total = imposable_remun + total_atn_avec_cotis + loyer_imposable;
+
+  // IPP calculé sur la base combinée
+  const ipp = calcIPP(imposable_total);
+
+  // Isoler la part d'IPP attribuable au loyer (marginal)
+  const ipp_sans_loyer = calcIPP(imposable_remun + total_atn_avec_cotis);
+  loyer_impot = ipp - ipp_sans_loyer;
+  loyer_net = loyer - loyer_impot;
+
+  // Net rémunération = brut - cotisations - IPP(hors loyer)
+  // Note : si ATN cotis activé, les cotis sont payées par la société (pas déduites du brut du dirigeant)
+  // MAIS l'IPP est plus élevé à cause de l'ATN cotis
+  const remun_net = use_atn_cotis
+    ? remun - ipp_sans_loyer   // Cotis payées par la société → pas déduites du brut
+    : remun - cotis - ipp_sans_loyer;
+
+  let net_total = remun_net + loyer_net + da_net + net_cheques + cp.cp_net + ff;
+  // Si ATN cotis : les cotisations sont un coût société en plus de la rémunération
+  let deductions = remun + cout_cheques + cp.cp_montant + loyer + da_brut + ff + (use_atn_cotis ? cotis : 0);
+
+  // L'ATN CALL PLUS + ATN classiques + ATN cotis comptent pour le seuil ISoc réduit
+  const remun_totale_isoc = remun + cp.cp_atn + total_atn_avec_cotis;
+
+  // 4. Dividendes (combler le reste)
+  let div_brut = 0, div_net = 0, div_pm = 0, taux_pm_div = 0, div_exoneration = 0;
+  if (use_div) {
+    const besoin_restant = net_cible - net_total;
+    if (besoin_restant > 0) {
+      // Taux PM applicable
+      if (use_vvprbis) {
+        const annee = parseInt($('i_vvprbis_annee').value) || 2020;
+        // Apports avant 2026 : 15% (3e ex+) ou 20% (2e ex)
+        // Apports à partir de 2026 : 18% (3e ex+) ou 30% (avant)
+        if (annee >= 2026) {
+          taux_pm_div = (2026 - annee >= 3) ? C.pm_vvprbis_18 : C.pm_ordinaire;
+        } else {
+          taux_pm_div = (2026 - annee >= 3) ? C.pm_vvprbis_15 : C.pm_vvprbis_20;
+        }
+      } else {
+        taux_pm_div = C.pm_ordinaire;
+      }
+      div_brut = Math.ceil(besoin_restant / (1 - taux_pm_div) / 500) * 500;
+
+      // Exonération première tranche (833 € revenus 2026)
+      // Le PM sur cette tranche est récupéré via la déclaration IPP
+      const tranche_exoneree = Math.min(div_brut, C.div_exoneration);
+      div_exoneration = tranche_exoneree * taux_pm_div; // PM récupéré
+      div_pm = div_brut * taux_pm_div - div_exoneration;
+      div_net = div_brut - div_pm;
+      net_total += div_net;
+    }
+  }
+
+  // Si net_total > cible, on réduit le dernier canal utilisé
+  if (net_total > net_cible + 2000) {
+    if (div_brut > 0) {
+      const excedent_net = net_total - net_cible;
+      const reduction_brut = Math.min(div_brut, Math.floor(excedent_net / (1-taux_pm_div) / 500) * 500);
+      div_brut -= reduction_brut;
+      const tranche_exoneree = Math.min(div_brut, C.div_exoneration);
+      div_exoneration = tranche_exoneree * taux_pm_div;
+      div_pm = div_brut * taux_pm_div - div_exoneration;
+      div_net = div_brut - div_pm;
+      net_total = remun_net + net_cheques + cp.cp_net + da_net + loyer_net + div_net + ff;
+    }
+  }
+
+  // Bénéfice résiduel et ISoc
+  const benef_residuel = Math.max(benefice - deductions, 0);
+  const remun_ok = remun_totale_isoc >= C.seuil_remun_min;
+  const isoc = calcISoc(benef_residuel, pme, remun_ok);
+
+  // Vérifier que le bénéfice post-ISoc suffit pour les dividendes
+  const benef_post_isoc = benef_residuel - isoc;
+  if (div_brut > benef_post_isoc && div_brut > 0) {
+    // Pas assez de réserves → ajuster
+    div_brut = Math.max(Math.floor(benef_post_isoc / 500) * 500, 0);
+    div_pm = div_brut * taux_pm_div;
+    div_net = div_brut - div_pm;
+    net_total = remun_net + net_cheques + cp.cp_net + da_net + loyer_net + div_net + ff;
+  }
+
+  // Coût total société
+  const cout_pretax = deductions + isoc + div_brut + div_pm;
+
+  // Taux ISoc effectif (pour calcul ratio par canal)
+  const taux_isoc_eff = (benef_residuel > 0 && isoc > 0) ? isoc / benef_residuel : (pme && remun_ok ? C.isoc_reduit : C.isoc_normal);
+
+  // Coût pré-tax société des dividendes :
+  // Dividendes non déductibles → la société doit générer div_brut / (1 - taux_isoc) de bénéfice pré-tax
+  const div_cout_pretax = div_brut > 0 ? div_brut / (1 - taux_isoc_eff) : 0;
+  const div_isoc_part = div_cout_pretax - div_brut; // Part d'ISoc attribuable aux dividendes
+
+  const ratio = net_total > 0 && cout_pretax > 0 ? net_total / cout_pretax : 0;
+
+  return {
+    remun_brut: remun,
+    remun_net,
+    cotis,
+    frais_pro,
+    ipp, ipp_sans_loyer: ipp - loyer_impot,
+    atn_total: atn,
+    atn_cotis_val,
+    use_atn_cotis,
+    total_atn_avec_cotis,
+    imposable_total,
+    da_brut, da_net, da_pm, da_plafonne, da_input: da_input || 0,
+    loyer, loyer_net, loyer_impot, loyer_imposable, loyer_forfait,
+    div_brut, div_net, div_pm, taux_pm_div, div_exoneration,
+    div_cout_pretax, div_isoc_part, taux_isoc_eff,
+    net_cheques, cout_cheques,
+    forfaits: ff,
+    cp_montant: cp.cp_montant, cp_atn: cp.cp_atn,
+    cp_pp: cp.cp_pp, cp_cotis: cp.cp_cotis, cp_net: cp.cp_net,
+    remun_totale_isoc,
+    remun_marginal_ratio, remun_depasse_div,
+    ratio_div: ratio_div || 0,
+    benef_residuel, isoc, benef_post_isoc,
+    cout_total: cout_pretax,
+    net_total,
+    ratio,
+    remun_ok
+  };
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SECTION : AFFICHAGE DES RÉSULTATS
+// ═══════════════════════════════════════════════════════════════════════════
+
+function afficherResultats(s, net_cible, benefice) {
+  $('results').classList.add('visible');
+  $('results').scrollIntoView({ behavior: 'smooth' });
+
+  // ── Hero ──
+  const ecart = s.net_total - net_cible;
+  $('r_hero').innerHTML = `
+    <div class="result-hero">
+      <h2>Mix optimal trouvé</h2>
+      <div class="big">${fmt(s.net_total)} €</div>
+      <div class="sub">Net poche annuel estimé — Cible : ${fmt(net_cible)} € (écart : ${ecart >= 0 ? '+' : ''}${fmt(ecart)} €)</div>
+      ${s.crossover_found ? `<div style="margin-top:10px;padding:8px 14px;background:rgba(61,217,160,0.1);border-radius:7px;font-size:12px;color:var(--green)">
+        🎯 Rémunération plafonnée à <strong>${fmt(s.remun_plafond)} €</strong> — au-delà, les dividendes deviennent plus efficients. Le solde est complété en dividendes.
+      </div>` : ''}
+    </div>`;
+
+  // ── KPIs ──
+  // Note: s.ipp inclut déjà la part loyer (ipp = ipp_sans_loyer + loyer_impot)
+  const charges_totales = s.cotis + s.ipp + s.da_pm + s.div_pm + s.cp_pp + s.cp_cotis;
+  $('r_kpis').innerHTML = `
+    <div class="kpi-row" style="grid-template-columns:repeat(${s.crossover_found ? 5 : 4},1fr)">
+      <div class="kpi"><div class="kl">Coût total société</div><div class="kv">${fmt(s.cout_total)} €</div><div class="ks">ISoc : ${fmt(s.isoc)} €</div></div>
+      <div class="kpi"><div class="kl">Ratio d'efficacité</div><div class="kv" style="color:${s.ratio>=.6?'var(--green)':s.ratio>=.45?'var(--orange)':'var(--red)'}">${fmtPct(s.ratio)}</div><div class="ks">Net ÷ Coût total</div></div>
+      <div class="kpi"><div class="kl">Charges dirigeant</div><div class="kv" style="color:var(--orange)">${fmt(charges_totales)} €</div><div class="ks">Cotis + IPP + PM + Pp</div></div>
+      ${s.crossover_found ? `<div class="kpi"><div class="kl">Plafond rémunération</div><div class="kv" style="color:var(--accent)">${fmt(s.remun_plafond)} €</div><div class="ks">Croisement remun/div</div></div>` : ''}
+      <div class="kpi"><div class="kl">Bénéfice résiduel</div><div class="kv">${fmt(s.benef_residuel)} €</div><div class="ks">Après ISoc : ${fmt(s.benef_post_isoc)} €</div></div>
+    </div>`;
+
+  // ── Alertes ──
+  const al = [];
+  if (!s.remun_ok) al.push({t:'red',m:`Rémunération totale ISoc (${fmt(s.remun_totale_isoc)} €) < ${fmt(C.seuil_remun_min)} € → Perte ISoc réduit PME`});
+  if (s.da_brut > 0 && s.da_plafonne)
+    al.push({t:'red',m:`DA demandés (${fmt(s.da_input)} €) limités à ${fmt(s.da_brut)} € (30% de ${fmt(s.remun_brut)} € ou plafond ${fmt(C.da_plafond)} €)`});
+  if (s.da_brut > 0 && s.remun_brut > 0 && s.da_input > s.remun_brut * C.da_ratio_max && !s.da_plafonne)
+    al.push({t:'yellow',m:`DA (${fmt(s.da_brut)} €) proche de la limite de 30% de la rémunération (${fmt(s.remun_brut * C.da_ratio_max)} €)`});
+  if (s.da_brut > C.da_plafond)
+    al.push({t:'red',m:`DA (${fmt(s.da_brut)} €) > plafond annuel (${fmt(C.da_plafond)} €)`});
+  // Règle ATN 20% : total ATN classiques + ATN CALL PLUS
+  const total_atn_forfaitaires = s.atn_total + s.cp_atn;
+  if (total_atn_forfaitaires > 0 && s.remun_brut > 0) {
+    const plafond_atn = s.remun_brut * C.atn_plafond_pct;
+    if (total_atn_forfaitaires > plafond_atn) {
+      const depassement = total_atn_forfaitaires - plafond_atn;
+      const taxe = depassement * C.atn_taxe_depassement;
+      al.push({t:'red',m:`Total ATN forfaitaires (${fmt(total_atn_forfaitaires)} €) > 20% des rémunérations (${fmt(plafond_atn)} €) → La société risque une taxe de 7,5% sur l'excédent de ${fmt(depassement)} € (= ${fmt(taxe)} €) ET la perte du taux ISoc réduit. Cette taxe n'est PAS incluse dans les calculs ci-dessus.`});
+    }
+  }
+  if (s.div_brut > s.benef_post_isoc && s.div_brut > 0)
+    al.push({t:'yellow',m:`Dividendes (${fmt(s.div_brut)} €) proches du bénéfice après ISoc (${fmt(s.benef_post_isoc)} €)`});
+  if (s.da_brut > 0 && !($('t_attestation') && $('t_attestation').checked))
+    al.push({t:'yellow',m:`DA sans attestation du travail des arts → PM 15% sur le brut total`});
+  if (s.cp_net > 0)
+    al.push({t:'yellow',m:`CALL PLUS : le net escompté (${fmt(s.cp_net)} €) suppose une performance neutre du sous-jacent. Le montant réel dépendra de l'évolution des marchés.`});
+  // ── Info plafond rémunération (croisement avec dividendes) ──
+  if (s.crossover_found && s.remun_plafond > 0) {
+    const pct_div = (s.ratio_div * 100).toFixed(1);
+    const d_at = calcRemunDetail(s.remun_plafond, s.atn_total, s.use_atn_cotis);
+    const d_above = calcRemunDetail(s.remun_plafond + 500, s.atn_total, s.use_atn_cotis);
+    const delta_net = d_above.net - d_at.net;
+    const delta_cout = d_above.cout - d_at.cout;
+    const ratio_above = delta_cout > 0 ? (delta_net / delta_cout * 100).toFixed(1) : '0.0';
+    const ratio_avg = d_at.cout > 0 ? (d_at.net / d_at.cout * 100).toFixed(1) : '0.0';
+    const cout_par_euro = (delta_cout / 500).toFixed(2);
+    const exo_txt = s.div_exoneration > 0 ? ' (dont 833 € exonérés)' : '';
+    const atc_txt = s.use_atn_cotis ? '<br>• Avec ATN cotis : chaque € brut supplémentaire coûte ~' + cout_par_euro + ' € à la société (brut + delta cotisations).' : '';
+    al.push({t:'ok',m:`Rémunération plafonnée à ${fmt(s.remun_plafond)} € brut.<br>
+      <span style="font-size:11.5px;line-height:1.6">
+      • <strong>Ratio moyen</strong> de la rémunération : ${ratio_avg}% — les premiers euros sont très efficients (quotité exemptée).<br>
+      • <strong>Ratio marginal</strong> au-delà de ${fmt(s.remun_plafond)} € : ${ratio_above}% net/coût société — passe sous le ratio dividendes (${pct_div}%).${atc_txt}<br>
+      • Le complément est donc versé en dividendes${exo_txt}, plus efficients au-delà de ce seuil.
+      </span>`});
+  } else if (s.ratio_div > 0 && !s.crossover_found && s.div_brut > 0) {
+    if (s.div_brut <= C.div_exoneration) {
+      al.push({t:'ok',m:`La rémunération reste plus efficace que les dividendes. Seuls les ${fmt(C.div_exoneration)} € de dividendes exonérés sont versés (PM récupéré via déclaration IPP).`});
+    } else {
+      al.push({t:'ok',m:`La rémunération reste plus efficace que les dividendes sur toute la plage. Le solde est versé en rémunération.`});
+    }
+  }
+  if (al.length === 0)
+    al.push({t:'ok',m:'Aucune alerte — tous les paramètres sont conformes'});
+
+  $('r_alerts').innerHTML = `<div class="alerts-box"><h3>${al[0].t==='ok'?'✅':'⚠️'} Alertes</h3>${
+    al.map(a=>`<div class="al ${a.t}">${a.t==='red'?'🔴':a.t==='yellow'?'🟡':'✅'} ${a.m}</div>`).join('')
+  }</div>`;
+
+  // ── Encadré explicatif : pourquoi le marginal et pas la moyenne ? ──
+  if (s.crossover_found && s.div_brut > 0 && s.remun_plafond > 0) {
+    // Calculer le scénario alternatif : rémunération poussée jusqu'à ce que la moyenne = ratio div
+    let remun_alt = s.remun_plafond;
+    for (let r = s.remun_plafond; r <= 150000; r += 500) {
+      const d = calcRemunDetail(r, s.atn_total, s.use_atn_cotis);
+      if (d.cout > 0 && d.net / d.cout < s.ratio_div) { remun_alt = r; break; }
+      remun_alt = r;
+    }
+    if (remun_alt > s.remun_plafond) {
+      const d_opt = calcRemunDetail(s.remun_plafond, s.atn_total, s.use_atn_cotis);
+      const d_alt = calcRemunDetail(remun_alt, s.atn_total, s.use_atn_cotis);
+      // Coût total pour atteindre le même net poche via chaque approche
+      const complement_opt = s.net_total - d_opt.net;  // Net hors remun (dans le scénario actuel)
+      const complement_alt = s.net_total - d_alt.net;
+      const cout_compl_opt = complement_opt > 0 ? complement_opt / s.ratio_div : 0;
+      const cout_compl_alt = complement_alt > 0 ? complement_alt / s.ratio_div : 0;
+      const cout_total_opt = d_opt.cout + cout_compl_opt;
+      const cout_total_alt = d_alt.cout + cout_compl_alt;
+      const economie = cout_total_alt - cout_total_opt;
+
+      if (economie > 50) {
+        $('r_alerts').innerHTML += `
+          <div class="alerts-box" style="margin-top:12px;border-color:var(--accent)">
+            <h3 style="color:var(--accent)">📊 Pourquoi le marginal et pas la moyenne ?</h3>
+            <div style="font-size:12.5px;line-height:1.7;color:var(--text)">
+              <p>Le ratio <strong>moyen</strong> de la rémunération reste élevé (${(d_alt.net/d_alt.cout*100).toFixed(1)}%) car les premiers euros sont très efficients (quotité exemptée → ~100% net). Mais le ratio <strong>marginal</strong> (le coût du dernier euro ajouté) baisse fortement au-delà de ${fmt(s.remun_plafond)} €.</p>
+              <table style="width:100%;margin:10px 0;font-size:12px;border-collapse:collapse">
+                <tr style="border-bottom:1px solid var(--border)">
+                  <th style="text-align:left;padding:6px 8px;color:var(--text2)">Scénario</th>
+                  <th style="text-align:right;padding:6px 8px;color:var(--text2)">Rémun brut</th>
+                  <th style="text-align:right;padding:6px 8px;color:var(--text2)">Coût soc. total</th>
+                </tr>
+                <tr style="border-bottom:1px solid var(--border)">
+                  <td style="padding:6px 8px"><strong style="color:var(--green)">A — Plafond marginal (optimal)</strong></td>
+                  <td style="text-align:right;padding:6px 8px">${fmt(s.remun_plafond)} €</td>
+                  <td style="text-align:right;padding:6px 8px;font-weight:700;color:var(--green)">${fmt(cout_total_opt)} €</td>
+                </tr>
+                <tr>
+                  <td style="padding:6px 8px"><strong>B — Plafond moyen (${fmt(remun_alt)} €)</strong></td>
+                  <td style="text-align:right;padding:6px 8px">${fmt(remun_alt)} €</td>
+                  <td style="text-align:right;padding:6px 8px">${fmt(cout_total_alt)} €</td>
+                </tr>
+              </table>
+              <p><strong style="color:var(--green)">Le scénario A économise ${fmt(economie)} € à la société</strong> pour le même net poche. Entre ${fmt(s.remun_plafond)} et ${fmt(remun_alt)} €, chaque euro de rémunération coûte plus cher que s'il était distribué en dividendes.</p>
+            </div>
+          </div>`;
+      }
+    }
+  }
+
+  // ── Mix répartition avec ratio incluant ISoc ──
+  // Coût pré-tax société : déductible = brut, non déductible (div) = brut / (1 - ISoc)
+  const items = [
+    { label:'Rémunération', net:Math.max(s.remun_net,0),
+      cout_soc: s.use_atn_cotis ? s.remun_brut + s.cotis : s.remun_brut,
+      charges: (s.use_atn_cotis ? s.remun_brut + s.cotis : s.remun_brut) - Math.max(s.remun_net,0),
+      ded:true, color:'#5b7fff' },
+    { label:'CALL PLUS', net:s.cp_net, cout_soc:s.cp_montant, charges:s.cp_pp+s.cp_cotis, ded:true, color:'#e879f9' },
+    { label:'Dividendes', net:s.div_net, cout_soc:s.div_cout_pretax, charges:s.div_pm+s.div_isoc_part, ded:false, color:'#f06060' },
+    { label:'Droits d\'auteur', net:s.da_net, cout_soc:s.da_brut, charges:s.da_pm, ded:true, color:'#a78bfa' },
+    { label:'Loyer', net:s.loyer_net, cout_soc:s.loyer, charges:s.loyer_impot, ded:true, color:'#f0a050' },
+    { label:'Chèques & avantages', net:s.net_cheques, cout_soc:s.cout_cheques, charges:0, ded:true, color:'#3dd9a0' },
+    { label:'Frais forfaitaires', net:s.forfaits, cout_soc:s.forfaits, charges:0, ded:true, color:'#38bdf8' },
+  ].filter(x => x.net > 0);
+
+  const total_net = items.reduce((a,b)=>a+b.net, 0);
+  const total_cout = items.reduce((a,b)=>a+b.cout_soc, 0);
+  const total_charges = items.reduce((a,b)=>a+b.charges, 0);
+  const ratio_global = total_cout > 0 ? total_net / total_cout : 0;
+
+  $('r_mix').innerHTML = `
+    <h3>Répartition du mix optimal</h3>
+    <div style="font-size:10.5px;color:var(--text2);margin-bottom:8px">Ratio moyen = net ÷ coût société. Les dividendes (⊘) incluent l'ISoc car non déductibles.</div>
+    <div style="display:grid; grid-template-columns:auto 1fr auto auto auto auto; gap:3px 8px; align-items:center; font-size:12px">
+      <span></span><span style="font-size:10px;color:var(--text2);font-weight:600">CANAL</span>
+      <span style="font-size:10px;color:var(--text2);font-weight:600;text-align:right">NET</span>
+      <span style="font-size:10px;color:var(--text2);font-weight:600;text-align:right">COÛT SOC.</span>
+      <span style="font-size:10px;color:var(--text2);font-weight:600;text-align:right">CHARGES</span>
+      <span style="font-size:10px;color:var(--text2);font-weight:600;text-align:right">RATIO MOY.</span>
+      ${items.map((i,idx) => {
+        const r = i.cout_soc > 0 ? i.net / i.cout_soc : 1;
+        const rc = r >= 0.85 ? 'var(--green)' : r >= 0.65 ? 'var(--accent)' : r >= 0.50 ? 'var(--orange)' : 'var(--red)';
+        // Sous-ligne marginal pour la rémunération
+        let marginal_row = '';
+        if (i.label === 'Rémunération' && s.crossover_found) {
+          const d1 = calcRemunDetail(s.remun_plafond, s.atn_total, s.use_atn_cotis);
+          const d2 = calcRemunDetail(s.remun_plafond + 500, s.atn_total, s.use_atn_cotis);
+          const dm = (d2.cout - d1.cout) > 0 ? (d2.net - d1.net) / (d2.cout - d1.cout) : 0;
+          const dmc = dm >= 0.85 ? 'var(--green)' : dm >= 0.65 ? 'var(--accent)' : dm >= s.ratio_div ? 'var(--orange)' : 'var(--red)';
+          marginal_row = `
+            <span></span>
+            <span style="font-size:10px;color:var(--text2);padding-left:14px">↳ ratio marginal au plafond</span>
+            <span></span><span></span><span></span>
+            <span style="text-align:right;font-size:11px;font-weight:600;color:${dmc}">${fmtPct(dm)}</span>
+          `;
+        }
+        return `
+          <span class="mix-dot" style="background:${i.color}"></span>
+          <span>${i.label}${!i.ded ? ' <span style="font-size:9px;color:var(--red)" title="Non déductible ISoc — coût incl. ISoc '+fmtPct(s.taux_isoc_eff)+'">⊘</span>' : ''}</span>
+          <span style="text-align:right;font-weight:600">${fmt(i.net)} €</span>
+          <span style="text-align:right;font-size:11px;color:var(--text2)">${fmt(i.cout_soc)} €</span>
+          <span style="text-align:right;color:var(--red);font-size:11px">${i.charges > 0 ? fmt(i.charges)+' €' : '-'}</span>
+          <span style="text-align:right;font-weight:700;color:${rc}">${fmtPct(r)}</span>
+          ${marginal_row}
+        `;
+      }).join('')}
+      <span style="grid-column:1/3;border-top:1px solid var(--border);padding-top:5px;font-weight:700">TOTAL</span>
+      <span style="border-top:1px solid var(--border);padding-top:5px;text-align:right;font-weight:700;color:var(--green)">${fmt(total_net)} €</span>
+      <span style="border-top:1px solid var(--border);padding-top:5px;text-align:right;font-size:11px;color:var(--text2)">${fmt(total_cout)} €</span>
+      <span style="border-top:1px solid var(--border);padding-top:5px;text-align:right;color:var(--red);font-size:11px">${fmt(total_charges)} €</span>
+      <span style="border-top:1px solid var(--border);padding-top:5px;text-align:right;font-weight:700;color:${ratio_global>=.6?'var(--green)':ratio_global>=.45?'var(--orange)':'var(--red)'}">${fmtPct(ratio_global)}</span>
+    </div>
+  `;
+
+  // ── Pie chart SVG ──
+  let pie = '<svg viewBox="0 0 260 260" style="width:100%;max-width:260px;margin:0 auto;display:block">';
+  const cx=130,cy=130,radius=110;
+  let cum = 0;
+  items.forEach(i => {
+    const pct = i.net / total_net;
+    const angle = pct * 360;
+    if (pct >= 0.999) {
+      pie += `<circle cx="${cx}" cy="${cy}" r="${radius}" fill="${i.color}"/>`;
+    } else if (pct > 0.005) {
+      const s1 = cum, e1 = cum + angle;
+      const x1 = cx+radius*Math.cos((s1-90)*Math.PI/180);
+      const y1 = cy+radius*Math.sin((s1-90)*Math.PI/180);
+      const x2 = cx+radius*Math.cos((e1-90)*Math.PI/180);
+      const y2 = cy+radius*Math.sin((e1-90)*Math.PI/180);
+      pie += `<path d="M${cx},${cy} L${x1},${y1} A${radius},${radius} 0 ${angle>180?1:0} 1 ${x2},${y2} Z" fill="${i.color}"/>`;
+    }
+    cum += angle;
+  });
+  pie += `<circle cx="${cx}" cy="${cy}" r="55" fill="var(--surface)"/>`;
+  pie += `<text x="${cx}" y="${cy-6}" text-anchor="middle" fill="var(--green)" font-size="18" font-weight="800">${fmt(total_net)}</text>`;
+  pie += `<text x="${cx}" y="${cy+14}" text-anchor="middle" fill="var(--text2)" font-size="10">NET POCHE</text>`;
+  pie += '</svg>';
+  $('r_chart').innerHTML = `<h3>Visualisation</h3>${pie}`;
+
+  // ── Tableau détail ──
+  const taux_div_label = s.taux_pm_div > 0 ? `PM ${fmtPct(s.taux_pm_div)}` : '-';
+  $('r_table').innerHTML = `
+    <h3>Ventilation détaillée du scénario optimal</h3>
+    <table id="detail_table">
+      <thead><tr><th>Poste</th><th>Brut / Montant</th><th>Charges</th><th>Net dirigeant</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Rémunération brute</strong></td><td>${fmt(s.remun_brut)} €</td><td>-</td><td>-</td></tr>
+        ${s.atn_total > 0 ? `
+        <tr><td style="padding-left:24px;color:var(--orange)">+ ATN classiques (ajoutés base IPP)</td><td style="color:var(--orange)">${fmt(s.atn_total)} €</td><td>-</td><td>-</td></tr>
+        ` : ''}
+        ${s.use_atn_cotis ? `
+        <tr><td style="padding-left:24px">Cotisations sociales <em style="color:var(--accent)">(payées par la société)</em></td><td>${fmt(s.cotis)} €</td><td style="color:var(--green)">Coût société</td><td style="font-size:11px;color:var(--text2)">Pas déduit du brut</td></tr>
+        <tr><td style="padding-left:24px;font-size:11px;color:var(--text2)">↳ ATN cotis (+${fmt(s.atn_cotis_val)} €) − déduction cotis (−${fmt(s.cotis)} €) = <strong style="color:var(--green)">neutre à l'IPP</strong></td><td colspan="3" style="font-size:11px;color:var(--text2)"></td></tr>
+        ` : `
+        <tr><td style="padding-left:24px">Cotisations sociales${s.atn_total > 0 ? ' <em style="color:var(--orange)">(base incl. ATN : '+fmt(s.remun_brut+s.atn_total)+' €)</em>' : ''}</td><td>-</td><td style="color:var(--red)">- ${fmt(s.cotis)} €</td><td>-</td></tr>
+        `}
+        <tr><td style="padding-left:24px">Frais professionnels (déduits)</td><td>-</td><td>${fmt(s.frais_pro)} €</td><td>-</td></tr>
+        <tr><td style="padding-left:24px">Base imposable IPP${s.use_atn_cotis ? ' <em style="font-size:11px;color:var(--text2)">(remun − frais pro + ATN classiques)</em>' : ''}</td><td>${fmt(s.imposable_total)} €</td><td>-</td><td>-</td></tr>
+        <tr><td style="padding-left:24px">IPP rémunération (+ add. communaux)${s.atn_total > 0 ? ' <em style="color:var(--orange)">(incl. ATN classiques)</em>' : ''}</td><td>-</td><td style="color:var(--red)">- ${fmt(s.ipp_sans_loyer)} €</td><td>-</td></tr>
+        <tr><td style="padding-left:24px"><strong>= Net rémunération</strong>${s.use_atn_cotis ? ' <em style="font-size:11px;color:var(--text2)">(brut − IPP)</em>' : ''}</td><td>-</td><td>-</td><td style="color:var(--accent)"><strong>${fmt(Math.max(s.remun_net,0))} €</strong></td></tr>
+
+        ${s.da_brut > 0 ? `
+        <tr><td><strong>Droits d'auteur</strong>${s.da_plafonne ? ' <em style="color:var(--orange)">(plafonné)</em>' : ''}</td><td>${fmt(s.da_brut)} €${s.da_plafonne ? ' <span style="font-size:11px;color:var(--orange)">(demandé : '+fmt(s.da_input)+' €)</span>' : ''}</td><td style="color:var(--red)">PM - ${fmt(s.da_pm)} €</td><td style="color:var(--accent)">${fmt(s.da_net)} €</td></tr>
+        ` : ''}
+
+        ${s.loyer > 0 ? `
+        <tr><td><strong>Loyer immobilier</strong></td><td>${fmt(s.loyer)} €</td><td>-</td><td>-</td></tr>
+        <tr><td style="padding-left:24px">Forfait frais 40 % (plaf. 2/3 RC × coeff)</td><td>-</td><td style="color:var(--green)">- ${fmt(s.loyer_forfait)} €</td><td>-</td></tr>
+        <tr><td style="padding-left:24px">Base imposable loyer</td><td>${fmt(s.loyer_imposable)} €</td><td>-</td><td>-</td></tr>
+        <tr><td style="padding-left:24px">IPP marginal sur loyer</td><td>-</td><td style="color:var(--red)">- ${fmt(s.loyer_impot)} €</td><td>-</td></tr>
+        <tr><td style="padding-left:24px"><strong>= Net loyer</strong></td><td>-</td><td>-</td><td style="color:var(--accent)"><strong>${fmt(s.loyer_net)} €</strong></td></tr>
+        ` : ''}
+
+        ${s.net_cheques > 0 ? `
+        <tr><td><strong>Chèques & avantages</strong></td><td>${fmt(s.cout_cheques)} €</td><td style="color:var(--green)">Exonéré</td><td style="color:var(--accent)">${fmt(s.net_cheques)} €</td></tr>
+        ` : ''}
+
+        ${s.forfaits > 0 ? `
+        <tr><td><strong>📋 Frais forfaitaires non taxés</strong></td><td>${fmt(s.forfaits)} €</td><td style="color:var(--green)">Aucune charge</td><td style="color:var(--green);font-weight:700">${fmt(s.forfaits)} € <span style="font-size:11px">(100%)</span></td></tr>
+        ` : ''}
+
+        ${s.cp_net > 0 ? `
+        <tr><td><strong>📊 CALL PLUS (Options sur actions)</strong></td><td>${fmt(s.cp_montant)} €</td><td>-</td><td>-</td></tr>
+        <tr><td style="padding-left:24px">ATN (25 % du plan)</td><td>${fmt(s.cp_atn)} €</td><td>-</td><td>-</td></tr>
+        <tr><td style="padding-left:24px">Précompte professionnel (53,5 %)</td><td>-</td><td style="color:var(--red)">- ${fmt(s.cp_pp)} €</td><td>-</td></tr>
+        <tr><td style="padding-left:24px">Cotisations sociales (~21,2 %)</td><td>-</td><td style="color:var(--red)">- ${fmt(s.cp_cotis)} €</td><td>-</td></tr>
+        <tr><td style="padding-left:24px"><strong>= Net CALL PLUS</strong></td><td>-</td><td>-</td><td style="color:var(--accent)"><strong>${fmt(s.cp_net)} €</strong></td></tr>
+        ` : ''}
+
+        ${s.div_brut > 0 ? `
+        <tr><td><strong>Dividendes</strong> (${taux_div_label})</td><td>${fmt(s.div_brut)} €</td><td>-</td><td>-</td></tr>
+        <tr><td style="padding-left:24px">PM brut (${taux_div_label})</td><td>-</td><td style="color:var(--red)">- ${fmt(s.div_brut * s.taux_pm_div)} €</td><td>-</td></tr>
+        ${s.div_exoneration > 0 ? `
+        <tr><td style="padding-left:24px">Exonération 1ère tranche (${fmt(C.div_exoneration)} €)</td><td>-</td><td style="color:var(--green)">+ ${fmt(s.div_exoneration)} €</td><td>-</td></tr>
+        ` : ''}
+        <tr><td style="padding-left:24px"><strong>= Net dividendes</strong></td><td>-</td><td>PM net : ${fmt(s.div_pm)} €</td><td style="color:var(--accent)"><strong>${fmt(s.div_net)} €</strong></td></tr>
+        ` : ''}
+
+        <tr><td colspan="4" style="padding:4px;border:none"></td></tr>
+        <tr><td><strong>ISoc société</strong></td><td>${fmt(s.benef_residuel)} € imposable</td><td style="color:var(--red)">${fmt(s.isoc)} €</td><td>-</td></tr>
+        <tr class="total-row"><td><strong>COÛT TOTAL SOCIÉTÉ</strong></td><td colspan="2">-</td><td>${fmt(s.cout_total)} €</td></tr>
+        <tr class="total-row"><td><strong>NET POCHE DIRIGEANT</strong></td><td colspan="2">-</td><td>${fmt(s.net_total)} €</td></tr>
+        <tr class="total-row"><td><strong>RATIO D'EFFICACITÉ</strong></td><td colspan="2">-</td><td>${fmtPct(s.ratio)}</td></tr>
+      </tbody>
+    </table>`;
+
+  // Stocker pour export
+  window._lastResult = s;
+
+  // ── GRAPHIQUE COURBE MARGINALE ──
+  renderMarginalChart(s);
+}
+
+function renderMarginalChart(s) {
+  const container = $('r_marginal_chart');
+  if (!s.ratio_div || s.ratio_div <= 0) { container.innerHTML = ''; return; }
+
+  // Dimensions SVG
+  const W = 700, H = 320;
+  const pad = { t: 30, r: 30, b: 55, l: 60 };
+  const gW = W - pad.l - pad.r;
+  const gH = H - pad.t - pad.b;
+
+  // Déterminer la plage X (0 à max rémunération intéressante)
+  const xMax = Math.max((s.remun_plafond || 50000) * 2.5, 60000);
+  const step = 500;
+
+  // Calculer les données
+  const points = [];
+  for (let r = 0; r <= xMax; r += step) {
+    const d1 = calcRemunDetail(r, s.atn_total, s.use_atn_cotis);
+    const d2 = calcRemunDetail(r + step, s.atn_total, s.use_atn_cotis);
+    const dn = d2.net - d1.net;
+    const dc = d2.cout - d1.cout;
+    const marginal = dc > 0 ? dn / dc : 0;
+    const avg = d1.cout > 0 ? d1.net / d1.cout : 0;
+    points.push({ x: r, marginal, avg });
+  }
+
+  // Échelles
+  const xScale = (v) => pad.l + (v / xMax) * gW;
+  const yScale = (v) => pad.t + gH - (Math.max(0, Math.min(v, 1.1)) / 1.1) * gH;
+
+  // Ratio dividendes
+  const rdY = yScale(s.ratio_div);
+
+  // Générer le path de la courbe marginale
+  let pathMarg = '';
+  let pathAvg = '';
+  points.forEach((p, i) => {
+    const x = xScale(p.x);
+    const ym = yScale(p.marginal);
+    const ya = yScale(p.avg);
+    pathMarg += (i === 0 ? 'M' : 'L') + x.toFixed(1) + ',' + ym.toFixed(1);
+    if (p.x > 0) pathAvg += (pathAvg === '' ? 'M' : 'L') + x.toFixed(1) + ',' + ya.toFixed(1);
+  });
+
+  // Zone verte (au-dessus du ratio div) et zone rouge (en dessous)
+  let areaGreen = '', areaRed = '';
+  points.forEach((p, i) => {
+    const x = xScale(p.x);
+    const ym = yScale(p.marginal);
+    if (p.marginal >= s.ratio_div) {
+      areaGreen += (areaGreen === '' ? 'M' : 'L') + x.toFixed(1) + ',' + ym.toFixed(1);
+    }
+    if (p.marginal < s.ratio_div && p.x > 5000) {
+      areaRed += (areaRed === '' ? 'M' : 'L') + x.toFixed(1) + ',' + ym.toFixed(1);
+    }
+  });
+
+  // Point de croisement
+  const plafX = s.crossover_found ? xScale(s.remun_plafond) : -1;
+
+  // Remun choisie par l'optimiseur
+  const remunX = xScale(s.remun_brut);
+
+  // Grille Y
+  const yTicks = [0, 0.2, 0.4, 0.6, 0.8, 1.0];
+  let gridLines = '';
+  let yLabels = '';
+  yTicks.forEach(t => {
+    const y = yScale(t);
+    gridLines += '<line x1="'+pad.l+'" y1="'+y+'" x2="'+(W-pad.r)+'" y2="'+y+'" stroke="var(--border)" stroke-width="0.5"/>';
+    yLabels += '<text x="'+(pad.l-8)+'" y="'+(y+4)+'" text-anchor="end" font-size="10" fill="var(--text2)">'+(t*100).toFixed(0)+'%</text>';
+  });
+
+  // Grille X
+  const xStep = xMax <= 60000 ? 10000 : 20000;
+  let xLabels = '';
+  for (let x = 0; x <= xMax; x += xStep) {
+    const px = xScale(x);
+    gridLines += '<line x1="'+px+'" y1="'+pad.t+'" x2="'+px+'" y2="'+(H-pad.b)+'" stroke="var(--border)" stroke-width="0.5"/>';
+    xLabels += '<text x="'+px+'" y="'+(H-pad.b+18)+'" text-anchor="middle" font-size="10" fill="var(--text2)">'+(x/1000).toFixed(0)+'k</text>';
+  }
+
+  // Label PM dividendes
+  const pmLabel = s.taux_pm_div > 0 ? fmtPct(s.taux_pm_div) : fmtPct(C.pm_ordinaire);
+
+  const svg = `
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px 12px 12px">
+    <h3 style="margin-bottom:10px">📊 Analyse marginale : rémunération vs dividendes</h3>
+    <svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:${W}px;display:block;margin:0 auto">
+      <defs>
+        <linearGradient id="greenZone" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="var(--green)" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="var(--green)" stop-opacity="0.02"/>
+        </linearGradient>
+        <linearGradient id="redZone" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="var(--red)" stop-opacity="0.02"/>
+          <stop offset="100%" stop-color="var(--red)" stop-opacity="0.12"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Grille -->
+      ${gridLines}
+
+      <!-- Zone verte (remun > div) -->
+      ${s.crossover_found ? `<rect x="${pad.l}" y="${pad.t}" width="${Math.max(0, plafX - pad.l)}" height="${gH}" fill="url(#greenZone)"/>` : ''}
+
+      <!-- Zone rouge (remun < div) -->
+      ${s.crossover_found ? `<rect x="${plafX}" y="${pad.t}" width="${Math.max(0, W - pad.r - plafX)}" height="${gH}" fill="url(#redZone)"/>` : ''}
+
+      <!-- Ligne ratio dividendes -->
+      <line x1="${pad.l}" y1="${rdY}" x2="${W-pad.r}" y2="${rdY}" 
+            stroke="var(--red)" stroke-width="1.5" stroke-dasharray="8,4"/>
+      <text x="${W-pad.r-4}" y="${rdY-6}" text-anchor="end" font-size="10" font-weight="600" fill="var(--red)">
+        Ratio div. ${pmLabel} = ${fmtPct(s.ratio_div)}
+      </text>
+
+      <!-- Courbe ratio moyen -->
+      <path d="${pathAvg}" fill="none" stroke="var(--orange)" stroke-width="1.2" stroke-dasharray="4,3" opacity="0.6"/>
+
+      <!-- Courbe ratio marginal -->
+      <path d="${pathMarg}" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+
+      <!-- Ligne verticale croisement -->
+      ${s.crossover_found ? `
+        <line x1="${plafX}" y1="${pad.t}" x2="${plafX}" y2="${H-pad.b}" 
+              stroke="var(--green)" stroke-width="1.5" stroke-dasharray="6,3"/>
+        <circle cx="${plafX}" cy="${rdY}" r="5" fill="var(--green)" stroke="var(--surface)" stroke-width="2"/>
+        <text x="${plafX}" y="${pad.t-8}" text-anchor="middle" font-size="11" font-weight="700" fill="var(--green)">
+          ${fmt(s.remun_plafond)} €
+        </text>
+      ` : ''}
+
+      <!-- Point remun choisie -->
+      ${s.remun_brut > 0 ? `
+        <circle cx="${remunX}" cy="${yScale(points.find(p=>p.x>=s.remun_brut-step)?.marginal||0)}" 
+                r="4" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"/>
+      ` : ''}
+
+      <!-- Labels axes -->
+      ${yLabels}
+      ${xLabels}
+      <text x="${pad.l + gW/2}" y="${H-5}" text-anchor="middle" font-size="11" fill="var(--text2)">Rémunération brute (€)</text>
+      <text x="14" y="${pad.t + gH/2}" text-anchor="middle" font-size="11" fill="var(--text2)" 
+            transform="rotate(-90, 14, ${pad.t + gH/2})">Ratio net / coût société</text>
+
+      <!-- Légende -->
+      <line x1="${pad.l+10}" y1="${H-pad.b+38}" x2="${pad.l+30}" y2="${H-pad.b+38}" stroke="var(--accent)" stroke-width="2.5"/>
+      <text x="${pad.l+34}" y="${H-pad.b+42}" font-size="10" fill="var(--text2)">Ratio marginal</text>
+
+      <line x1="${pad.l+145}" y1="${H-pad.b+38}" x2="${pad.l+165}" y2="${H-pad.b+38}" stroke="var(--orange)" stroke-width="1.2" stroke-dasharray="4,3" opacity="0.6"/>
+      <text x="${pad.l+169}" y="${H-pad.b+42}" font-size="10" fill="var(--text2)">Ratio moyen</text>
+
+      <line x1="${pad.l+260}" y1="${H-pad.b+38}" x2="${pad.l+280}" y2="${H-pad.b+38}" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="8,4"/>
+      <text x="${pad.l+284}" y="${H-pad.b+42}" font-size="10" fill="var(--text2)">Ratio dividendes</text>
+
+      ${s.crossover_found ? `
+      <line x1="${pad.l+400}" y1="${H-pad.b+38}" x2="${pad.l+420}" y2="${H-pad.b+38}" stroke="var(--green)" stroke-width="1.5" stroke-dasharray="6,3"/>
+      <text x="${pad.l+424}" y="${H-pad.b+42}" font-size="10" fill="var(--text2)">Point de croisement</text>
+      ` : ''}
+    </svg>
+    <div style="margin-top:8px;font-size:11px;color:var(--text2);line-height:1.5">
+      <strong style="color:var(--accent)">Lecture :</strong> tant que la courbe bleue (marginal) est au-dessus de la ligne rouge (dividendes), 
+      chaque euro de rémunération supplémentaire coûte moins cher que s'il était distribué en dividendes. 
+      Au croisement${s.crossover_found ? ' ('+fmt(s.remun_plafond)+' €)' : ''}, les dividendes deviennent plus efficients.
+      ${s.use_atn_cotis ? '<br><em>Avec ATN cotis : le coût société par € de remun inclut le delta cotisations, ce qui abaisse le croisement.</em>' : ''}
+    </div>
+  </div>`;
+
+  container.innerHTML = svg;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SECTION : IMPRESSION PDF
+// ═══════════════════════════════════════════════════════════════════════════
+
+function printPDF() {
+  if (!window._lastResult) {
+    alert('Lancez d\'abord une optimisation.');
+    return;
+  }
+  // Set print header info
+  $('ph_logo_img').src = LOGO_DISRUPT;
+  const clientName = $('i_client_name').value.trim();
+  $('ph_client_name').textContent = clientName ? clientName : '';
+  $('ph_date').textContent = 'Généré le ' + new Date().toLocaleDateString('fr-BE', { day:'2-digit', month:'long', year:'numeric' });
+  
+  // Small delay to let browser render, then print
+  setTimeout(() => window.print(), 200);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SECTION : EXPORT CSV
+// ═══════════════════════════════════════════════════════════════════════════
+
+function exportCSV() {
+  const t = document.getElementById('detail_table');
+  if (!t) { alert('Lancez d\'abord une optimisation.'); return; }
+  let csv = '';
+  t.querySelectorAll('tr').forEach(row => {
+    const cols = [];
+    row.querySelectorAll('th,td').forEach(c => {
+      cols.push('"' + c.textContent.replace(/"/g,'""').trim() + '"');
+    });
+    csv += cols.join(';') + '\n';
+  });
+  const blob = new Blob(['\ufeff' + csv], { type:'text/csv;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'mix_optimal_' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// INITIALISATION
+// ═══════════════════════════════════════════════════════════════════════════
+
+document.addEventListener('DOMContentLoaded', setupToggles);
+</script>
+
+</body>
+</html>
